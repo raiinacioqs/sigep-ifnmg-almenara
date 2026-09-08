@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de Acesso - Sistema de Gestão Patrimonial - IFNMG - Campus Almenara</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center py-5 min-vh-100">
+
+    <div class="card shadow-sm border-0 p-4 rounded-4" style="width: 100%; max-width: 480px;">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="fw-bold text-dark mb-0">SIGEP</h4>
+                <small class="text-muted">Sistema de Gestão Patrimonial</small>
+            </div>
+            <!-- Logo do IFNMG Almenara -->
+            <img src="../img/almenara_horizontal_jpg.jpg" alt="Logo do IFNMG - Campus Almenara" style="max-height: 40px; width: auto" class="img-fluid">
+        </div>
+
+        <div class="mb-4">
+            <h5 class="fw-bold text-dark">Solicitação de acesso</h5>
+            <p class="text-muted small mb-0">Preencha os dados abaixo para solicitar acesso ao sistema SIGEP.</p>
+        </div>
+
+        <form id="solicitacaoForm">
+            <div class="mb-3">
+                <label for="nome" class="form-label small fw-semibold text-secondary">Nome completo</label>
+                <input type="text" class="form-control" id="nome" placeholder="Nome completo" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label small fw-semibold text-secondary">E-mail institucional</label>
+                <input type="email" class="form-control" id="email" placeholder="nome.sobrenome@ifnmg.edu.br" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="siape" class="form-label small fw-semibold text-secondary">SIAPE/Matrícula</label>
+                <input type="text" class="form-control" id="siape" placeholder="SIAPE ou matrícula" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="setor" class="form-label small fw-semibold text-secondary">Setor/Departamento</label>
+                <input type="text" class="form-control" id="setor" placeholder="Setor/Departamento" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="perfil" class="form-label small fw-semibold text-secondary">Perfil solicitado</label>
+                <select class="form-select text-muted" id="perfil" required>
+                    <option value="" disabled selected>Selecione um perfil</option>
+                    <option value="servidor">Servidor / Gestor de Patrimônio</option>
+                    <option value="almoxarife">Almoxarife</option>
+                    <option value="consulta">Consulta</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 mt-2 fw-semibold">Enviar solicitação</button>
+        </form>
+
+
+        <div class="text-center mt-3">
+            <a href="../index.html" class="text-success small text-decoration-none fw-semibold">← Voltar ao login</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/solicitacao.js"></script>
+</body>
+</html>

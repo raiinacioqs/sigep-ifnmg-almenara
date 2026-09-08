@@ -1,0 +1,23 @@
+body {
+    background-color: #f4f6f9 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15);
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
