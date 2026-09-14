@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Entrada - SIGEP - IFNMG Campus Almenara</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Arquivo CSS Personalizado -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body class="bg-light pb-5 pb-md-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-none d-md-flex flex-column justify-content-between sidebar-green min-vh-100 p-3 position-fixed top-0 start-0">
+                <div>
+                   
+                    <div class="mb-4 pt-2 px-2 text-white">
+                        <h4 class="fw-bold mb-0">SIGEP</h4>
+                        <small class="text-white-50 text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">Gestão Patrimonial</small>
+                    </div>
+
+                    
+                    <ul class="nav flex-column gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="dashboard.html">
+                                <i class="bi bi-grid-fill me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3" href="cadastro_entrada.html">
+                                <i class="bi bi-plus-circle me-2"></i> Cadastro de Entrada
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="estoque_atual.html">
+                                <i class="bi bi-box-seam me-2"></i> Estoque
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="#">
+                                <i class="bi bi-arrow-down-left-circle me-2"></i> Solicitação de Retirada
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="#">
+                                <i class="bi bi-bar-chart-fill me-2"></i> Relatórios
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="user-card bg-black bg-opacity-10 p-2 rounded-3 d-flex align-items-center justify-content-between text-white mt-auto">
+                    <div class="d-flex align-items-center overflow-hidden me-2">
+                        <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2" style="width: 36px; height: 36px; font-size: 0.85rem;">
+                            GA
+                        </div>
+                        <div class="overflow-hidden">
+                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;" title="Gestor Almoxarifado">Gestor Almox...</h6>
+                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;">IFNMG - Almenara</small>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-logout px-2 py-1 text-danger fw-semibold text-decoration-none flex-shrink-0" style="font-size: 0.75rem;">
+                        Sair
+                    </a>
+                </div>
+            </nav>
+
+            <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 offset-md-3 offset-lg-2">
+
+                <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded-3 shadow-sm mb-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold text-dark fs-6">Sistema de Gestão Patrimonial</span>
+                        <span class="badge bg-light text-secondary border fw-normal d-none d-sm-inline" style="font-size: 0.7rem;">CAMPUS ALMENARA</span>
+                    </div>
+                    <div>
+                        <img src="../img/almenara_horizontal_jpg.jpg" alt="Logo IFNMG Almenara" style="max-height: 32px; width: auto;">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fw-bold text-dark mb-1 fs-4">Cadastro de Entrada de Bens</h3>
+                    <p class="text-muted small mb-0">Registre a incorporação de novos bens permanentes ou de consumo ao patrimônio do campus.</p>
+                </div>
+
+                <div class="card border-0 shadow-sm p-4 rounded-4 mb-5">
+                    
+                    <!-- Caixa de Aviso (Alert) -->
+                    <div class="alert alert-primary bg-primary bg-opacity-10 border-0 text-primary d-flex align-items-start gap-2 mb-4 rounded-3 p-3" role="alert">
+                        <i class="bi bi-info-circle fs-5 flex-shrink-0 mt-1"></i>
+                        <div class="small">
+                            <strong>Atenção:</strong> Registre apenas itens já recebidos fisicamente no almoxarifado. O sistema não gerencia processos de licitação ou compras externas (RN01).
+                        </div>
+                    </div>
+
+                    <form>
+                        <div class="row g-3 mb-3">
+                            <!-- Descrição do item -->
+                            <div class="col-12 col-md-8">
+                                <label class="form-label fw-semibold text-dark small">Descrição do item</label>
+                                <input type="text" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Ex: Toner HP LaserJet 12A - Preto">
+                            </div>
+                            <!-- Quantidade -->
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fw-semibold text-dark small">Quantidade</label>
+                                <input type="number" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Digite a quantidade">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <!-- Fornecedor -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-dark small">Fornecedor</label>
+                                <input type="text" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Razão social ou CNPJ do fornecedor">
+                            </div>
+                            <!-- Nota fiscal (número) -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-dark small">Nota fiscal (número)</label>
+                                <input type="text" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Ex: NF-e 18472">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <!-- Anexo da nota fiscal -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-dark small">Anexo da nota fiscal</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text bg-light border-0 text-muted px-3"><i class="bi bi-paperclip"></i></span>
+                                    <input type="text" class="form-control form-control-sm py-2 bg-light text-muted border-0" placeholder="Clique para anexar arquivo PDF/imagem" readonly>
+                                </div>
+                            </div>
+                            <!-- Setor responsável -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-dark small">Setor responsável</label>
+                                <input type="text" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Ex: Direção Geral, TI, Almoxarifado">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <!-- Solicitante -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-dark small">Solicitante</label>
+                                <input type="text" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Nome do servidor solicitante">
+                            </div>
+                            <!-- Localização exata -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-dark small">Localização exata (Prédio/Sala/Armário)</label>
+                                <input type="text" class="form-control form-control-sm py-2 bg-light text-secondary border-0" placeholder="Ex: Prédio A, Sala 12, Armário 03">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <!-- Observações -->
+                            <label class="form-label fw-semibold text-dark small">Observações</label>
+                            <textarea class="form-control bg-light text-secondary border-0" rows="4" placeholder="Descreva qualquer detalhe adicional relevante sobre o estado de conservação, número de lote ou especificidades da nota fiscal."></textarea>
+                        </div>
+
+                        <!-- Botões de Ação (Alinhados à direita igual ao Figma) -->
+                        <div class="d-flex justify-content-end gap-2 pt-2">
+                            <button type="button" class="btn btn-light text-secondary px-4 py-2 fw-semibold border bg-opacity-50" style="font-size: 0.9rem;">Cancelar</button>
+                            <button type="submit" class="btn btn-success px-4 py-2 fw-semibold" style="font-size: 0.9rem;">Salvar Entrada</button>
+                        </div>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <nav class="navbar fixed-bottom bg-white border-top d-flex d-md-none justify-around py-2 px-3 shadow-lg">
+        <a href="dashboard.html" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;">
+            <i class="bi bi-grid-fill d-block fs-5"></i> Dashboard
+        </a>
+        <a href="cadastro_entrada.html" class="text-success text-center text-decoration-none flex-fill" style="font-size: 0.7rem;">
+            <i class="bi bi-plus-circle d-block fs-5"></i> Cadastro
+        </a>
+        <a href="cadastro_entrada.html" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;">
+            <i class="bi bi-box-seam d-block fs-5"></i> Estoque
+        </a>
+        <a href="#" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;">
+            <i class="bi bi-arrow-down-left-circle d-block fs-5"></i> Retirada
+        </a>
+        <a href="#" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;">
+            <i class="bi bi-bar-chart-fill d-block fs-5"></i> Relatórios
+        </a>
+    </nav>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
