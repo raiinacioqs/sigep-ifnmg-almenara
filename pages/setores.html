@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Setores - SIGEP - IFNMG Campus Almenara</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body class="bg-light pb-5 pb-md-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar / Menu Lateral -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-none d-md-flex flex-column justify-content-between sidebar-green min-vh-100 p-3 position-fixed top-0 start-0">
+                <div>
+                    <div class="mb-4 pt-2 px-2 text-white">
+                        <h4 class="fw-bold mb-0">SIGEP</h4>
+                        <small class="text-white-50 text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">Gestão Patrimonial</small>
+                    </div>
+
+                    <ul class="nav flex-column gap-1">
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="cadastro_entrada.html"><i class="bi bi-box-arrow-in-down me-2"></i> Cadastro de Entrada</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="estoque_atual.html"><i class="bi bi-box-seam me-2"></i> Estoque</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="historico.html"><i class="bi bi-clock-history me-2"></i> Histórico</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="manutencoes.html"><i class="bi bi-tools me-2"></i> Manutenções</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="solicitacao_retirada.html"><i class="bi bi-arrow-down-left-circle me-2"></i> Solicitação de Retirada</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="relatorios.html"><i class="bi bi-file-earmark-bar-graph me-2"></i> Relatórios</a></li>
+                        
+                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1" style="font-size: 0.65rem; letter-spacing: 1px;">Cadastros</div>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="categorias.html"><i class="bi bi-folder me-2"></i> Categorias</a></li>
+                        <li class="nav-item"><a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3" href="setores.html"><i class="bi bi-building me-2"></i> Setores</a></li>
+                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="responsaveis.html"><i class="bi bi-people me-2"></i> Responsáveis</a></li>
+                    </ul>
+                </div>
+
+                <!-- Perfil Gestor -->
+                <div class="user-card bg-black bg-opacity-10 p-2 rounded-3 d-flex align-items-center justify-content-between text-white mt-auto">
+                    <div class="d-flex align-items-center overflow-hidden me-2">
+                        <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2" style="width: 36px; height: 36px; font-size: 0.85rem;">GA</div>
+                        <div class="overflow-hidden">
+                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;">Gestor Almox...</h6>
+                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;">IFNMG - Almenara</small>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-logout px-2 py-1 text-danger fw-semibold text-decoration-none flex-shrink-0" style="font-size: 0.75rem;">Sair</a>
+                </div>
+            </nav>
+
+            <!-- Conteúdo Principal -->
+            <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 offset-md-3 offset-lg-2">
+                <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded-3 shadow-sm mb-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold text-dark fs-6">Sistema de Gestão Patrimonial</span>
+                        <span class="badge bg-light text-secondary border fw-normal d-none d-sm-inline" style="font-size: 0.7rem;">CAMPUS ALMENARA</span>
+                    </div>
+                    <img src="../img/almenara_horizontal_jpg.jpg" alt="Logo IFNMG Almenara" style="max-height: 32px; width: auto;">
+                </div>
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                    <div>
+                        <h3 class="fw-bold text-dark mb-1 fs-4">Cadastro de Setores</h3>
+                        <p class="text-muted small mb-0">Gerencie os setores e departamentos acadêmicos e administrativos do campus.</p>
+                    </div>
+                    <button class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto">
+                        <i class="bi bi-plus-lg"></i> Novo Setor
+                    </button>
+                </div>
+
+                <!-- Filtros e Busca -->
+                <div class="card border-0 shadow-sm p-3 rounded-4 mb-4">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-9">
+                            <div class="input-group input-group-sm bg-light rounded-2 border-0">
+                                <span class="input-group-text bg-transparent border-0 text-muted"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control bg-transparent border-0 shadow-none" placeholder="Buscar por Nome do Setor ou Responsável...">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <select class="form-select form-select-sm bg-light border-0 text-secondary py-2">
+                                <option selected>Status</option>
+                                <option value="1">Ativo</option>
+                                <option value="2">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela Desktop -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 d-none d-md-block">
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="bg-light text-muted small">
+                                <tr>
+                                    <th class="py-3 px-4 fw-semibold">ID</th>
+                                    <th class="py-3 px-3 fw-semibold">Nome do Setor</th>
+                                    <th class="py-3 px-3 fw-semibold">Localização</th>
+                                    <th class="py-3 px-3 fw-semibold">Responsável</th>
+                                    <th class="py-3 px-3 fw-semibold text-center">Qtd. Bens</th>
+                                    <th class="py-3 px-3 fw-semibold">Status</th>
+                                    <th class="py-3 px-4 fw-semibold text-end">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="small">
+                                <tr>
+                                    <td class="py-3 px-4 text-muted fw-semibold">SET-01</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Coordenação de TI</td>
+                                    <td class="py-3 px-3 text-muted">Prédio A - Sala 12</td>
+                                    <td class="py-3 px-3 text-secondary">Carlos Souza</td>
+                                    <td class="py-3 px-3 text-center fw-bold text-dark">87</td>
+                                    <td class="py-3 px-3"><span class="badge bg-success text-white px-2 py-1 fw-semibold">Ativo</span></td>
+                                    <td class="py-3 px-4 text-end">
+                                        <button class="btn btn-sm text-primary p-1" title="Editar"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm text-danger p-1" title="Excluir"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 text-muted fw-semibold">SET-02</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Secretaria Geral</td>
+                                    <td class="py-3 px-3 text-muted">Prédio A - Sala 01</td>
+                                    <td class="py-3 px-3 text-secondary">Ana Lima</td>
+                                    <td class="py-3 px-3 text-center fw-bold text-dark">156</td>
+                                    <td class="py-3 px-3"><span class="badge bg-success text-white px-2 py-1 fw-semibold">Ativo</span></td>
+                                    <td class="py-3 px-4 text-end">
+                                        <button class="btn btn-sm text-primary p-1" title="Editar"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm text-danger p-1" title="Excluir"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 text-muted fw-semibold">SET-03</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Laboratório de Química</td>
+                                    <td class="py-3 px-3 text-muted">Prédio B - Sala 05</td>
+                                    <td class="py-3 px-3 text-secondary">Prof. Roberto</td>
+                                    <td class="py-3 px-3 text-center fw-bold text-dark">45</td>
+                                    <td class="py-3 px-3"><span class="badge bg-success text-white px-2 py-1 fw-semibold">Ativo</span></td>
+                                    <td class="py-3 px-4 text-end">
+                                        <button class="btn btn-sm text-primary p-1" title="Editar"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm text-danger p-1" title="Excluir"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 text-muted fw-semibold">SET-04</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Almoxarifado Geral</td>
+                                    <td class="py-3 px-3 text-muted">Prédio B - Subsolo</td>
+                                    <td class="py-3 px-3 text-secondary">Gestor GA</td>
+                                    <td class="py-3 px-3 text-center fw-bold text-dark">523</td>
+                                    <td class="py-3 px-3"><span class="badge bg-success text-white px-2 py-1 fw-semibold">Ativo</span></td>
+                                    <td class="py-3 px-4 text-end">
+                                        <button class="btn btn-sm text-primary p-1" title="Editar"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm text-danger p-1" title="Excluir"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 text-muted fw-semibold">SET-05</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Biblioteca Central</td>
+                                    <td class="py-3 px-3 text-muted">Prédio C</td>
+                                    <td class="py-3 px-3 text-secondary">Maria Santos</td>
+                                    <td class="py-3 px-3 text-center fw-bold text-dark">234</td>
+                                    <td class="py-3 px-3"><span class="badge bg-danger text-white px-2 py-1 fw-semibold">Inativo</span></td>
+                                    <td class="py-3 px-4 text-end">
+                                        <button class="btn btn-sm text-primary p-1" title="Editar"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm text-danger p-1" title="Excluir"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-white py-3 px-4 d-flex justify-content-between align-items-center border-top">
+                        <small class="text-muted">Exibindo 1-5 de 18 setores</small>
+                        <nav>
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item disabled"><a class="page-link border-0 text-muted" href="#">Anterior</a></li>
+                                <li class="page-item active"><a class="page-link bg-success border-success text-white rounded-1 mx-1" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link border-0 text-secondary rounded-1 mx-1" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link border-0 text-secondary rounded-1 mx-1" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link border-0 text-secondary" href="#">Próximo</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Cards Mobile -->
+                <div class="d-flex flex-column gap-3 d-md-none">
+                    <div class="card border-0 shadow-sm p-3 rounded-3">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <span class="text-muted fw-semibold" style="font-size: 0.75rem;">Locat: Prédio A Sala 12</span>
+                            <span class="badge bg-success text-white" style="font-size: 0.65rem;">Ativo</span>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1">Coordenação de TI</h6>
+                        <div class="d-flex justify-content-between text-muted small" style="font-size: 0.8rem;">
+                            <span>Resp: Carlos Souza</span>
+                            <span class="fw-bold text-dark">Bens: 87</span>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm p-3 rounded-3">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <span class="text-muted fw-semibold" style="font-size: 0.75rem;">Locat: Prédio A Sala 01</span>
+                            <span class="badge bg-success text-white" style="font-size: 0.65rem;">Ativo</span>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1">Secretaria Geral</h6>
+                        <div class="d-flex justify-content-between text-muted small" style="font-size: 0.8rem;">
+                            <span>Resp: Ana Lima</span>
+                            <span class="fw-bold text-dark">Bens: 156</span>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm p-3 rounded-3">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <span class="text-muted fw-semibold" style="font-size: 0.75rem;">Locat: Prédio B Sala 05</span>
+                            <span class="badge bg-success text-white" style="font-size: 0.65rem;">Ativo</span>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1">Laboratório de Química</h6>
+                        <div class="d-flex justify-content-between text-muted small" style="font-size: 0.8rem;">
+                            <span>Resp: Prof. Roberto</span>
+                            <span class="fw-bold text-dark">Bens: 45</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2">
+                        <small class="text-muted">Exibindo 1-3 de 18</small>
+                        <button class="btn btn-sm btn-outline-success py-1 px-3">Próxima</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegação Mobile Inferior -->
+    <nav class="navbar fixed-bottom bg-white border-top d-flex d-md-none justify-around py-2 px-3 shadow-lg">
+        <a href="dashboard.html" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;"><i class="bi bi-speedometer2 d-block fs-5"></i> Dashboard</a>
+        <a href="setores.html" class="text-success text-center text-decoration-none flex-fill fw-bold" style="font-size: 0.7rem;"><i class="bi bi-building d-block fs-5"></i> Cadastro</a>
+        <a href="servidor-estoque.html" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;"><i class="bi bi-box-seam d-block fs-5"></i> Estoque</a>
+        <a href="servidor-retirada.html" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;"><i class="bi bi-arrow-down-left-circle d-block fs-5"></i> Retirada</a>
+        <a href="relatorios.html" class="text-muted text-center text-decoration-none flex-fill" style="font-size: 0.7rem;"><i class="bi bi-file-earmark-bar-graph d-block fs-5"></i> Relatórios</a>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
