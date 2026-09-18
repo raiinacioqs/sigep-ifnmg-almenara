@@ -9,7 +9,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Arquivo CSS Personalizado -->
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/layout.css">
 </head>
 <body class="bg-light pb-5 pb-md-0">
 
@@ -34,6 +34,7 @@
                     </div>
 
                     <ul class="nav flex-column gap-1">
+                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1" style="font-size: 0.65rem; letter-spacing: 1px;">Visão Geral</div>
                         <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="cadastro_entrada.html"><i class="bi bi-box-arrow-in-down me-2"></i> Cadastro de Entrada</a></li>
                         <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="estoque_atual.html"><i class="bi bi-box-seam me-2"></i> Estoque</a></li>
@@ -117,7 +118,8 @@
                                 <tr>
                                     <th class="py-3 px-4 fw-semibold">Data/Hora</th>
                                     <th class="py-3 px-3 fw-semibold">Tipo</th>
-                                    <th class="py-3 px-3 fw-semibold">Item / Tombo</th>
+                                    <th class="py-3 px-3 fw-semibold">Item</th>
+                                    <th class="py-3 px-3 fw-semibold">Tombo</th>
                                     <th class="py-3 px-3 fw-semibold text-center">Qtd</th>
                                     <th class="py-3 px-3 fw-semibold">De (Origem)</th>
                                     <th class="py-3 px-3 fw-semibold">Para (Destino)</th>
@@ -128,10 +130,21 @@
                                 <tr>
                                     <td class="py-3 px-4 text-muted">25/10/2023 14:32</td>
                                     <td class="py-3 px-3"><span class="badge bg-success text-white px-2 py-1 fw-semibold">Entrada</span></td>
-                                    <td class="py-3 px-3 fw-bold text-dark">2023.0012 - Toner HP LaserJet 12A</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">2023.0012</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Toner HP LaserJet 12A</td>
                                     <td class="py-3 px-3 text-center fw-bold text-dark">10</td>
                                     <td class="py-3 px-3 text-muted">Fornecedor</td>
                                     <td class="py-3 px-3 text-secondary">Almoxarifado Prédio B</td>
+                                    <td class="py-3 px-4 text-muted">Gestor Almoxarifado</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 text-muted">25/10/2023 11:15</td>
+                                    <td class="py-3 px-3"><span class="badge bg-danger text-white px-2 py-1 fw-semibold">Saída</span></td>
+                                    <td class="py-3 px-3 fw-bold text-dark">2023.0015</td>
+                                    <td class="py-3 px-3 fw-bold text-dark">Caneta Esferográfica Bic Azul</td>
+                                    <td class="py-3 px-3 text-center fw-bold text-dark">20</td>
+                                    <td class="py-3 px-3 text-muted">Almoxarifado B</td>
+                                    <td class="py-3 px-3 text-secondary">Coord. TI</td>
                                     <td class="py-3 px-4 text-muted">Gestor Almoxarifado</td>
                                 </tr>
                             </tbody>
@@ -225,6 +238,7 @@
         </a>
     </nav>
 
+    <script src="../js/dashboard.js"></script>
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
