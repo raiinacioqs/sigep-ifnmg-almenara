@@ -40,3 +40,52 @@
 .dropdown-toggle::after {
     display: none !important;
 }
+
+/* --- Barra Superior Mobile (Estilo Figma) --- */
+.mobile-top-bar {
+    background-color: #198754 !important;
+}
+
+.mobile-top-logo-box {
+    background-color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.mobile-avatar-btn {
+    background-color: #14532d !important; /* Verde escuro institucional do Figma */
+    color: #ffffff !important;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Remove a setinha do dropdown no avatar mobile */
+.mobile-avatar-btn::after {
+    display: none !important;
+}
+
+/* --- Barra Inferior Mobile (Estilo Figma) --- */
+.mobile-bottom-nav {
+    background-color: #198754 !important;
+    border-top: none !important;
+}
+
+.mobile-bottom-nav a {
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 0.65rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+/* Pílula de destaque para a página ativa (igual ao Figma) */
+.mobile-bottom-nav a.active {
+    background-color: #14532d !important;
+    font-weight: 600;
+}
