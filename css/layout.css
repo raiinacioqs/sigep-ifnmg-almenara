@@ -89,3 +89,26 @@
     background-color: #14532d !important;
     font-weight: 600;
 }
+
+/* --- Barra Inferior Deslizável (Mobile Swipe) --- */
+.mobile-bottom-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Oculta a barra de rolagem visualmente para ficar com design limpo */
+.mobile-bottom-nav::-webkit-scrollbar {
+    display: none;
+}
+.mobile-bottom-nav {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Garante que os links mantenham uma largura ideal e não encolham */
+.mobile-bottom-nav a {
+    flex-shrink: 0;
+    min-width: 74px;
+}
