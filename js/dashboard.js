@@ -66,4 +66,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // 5. Identificação de páginas e aplicação de estilo de destaque
+    document.addEventListener("DOMContentLoaded", function () {
+    // Pega o nome do arquivo da página atual (ex: "manutencoes.html", "historico.html")
+    const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+
+    // Seleciona todos os links da barra de navegação inferior mobile
+    const linksMobile = document.querySelectorAll(".mobile-nav a"); // Ajuste o seletor conforme a classe do seu container
+
+    linksMobile.forEach(link => {
+        const hrefLink = link.getAttribute("href");
+
+        // Se o href do link corresponder à página atual, aplica o estilo ativo
+        if (hrefLink === paginaAtual) {
+            link.classList.add("active");
+            link.style.backgroundColor = "#14532d";
+            link.style.opacity = "1";
+        } else {
+            // Remove o destaque das outras abas
+            link.classList.remove("active");
+            link.style.backgroundColor = "transparent"; // ou a cor padrão do fundo da barra
+            link.style.opacity = "0.75";
+        }
+    });
+});
+
 });
