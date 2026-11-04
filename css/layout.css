@@ -112,3 +112,20 @@
     flex-shrink: 0;
     min-width: 74px;
 }
+
+/* Esconde a barra de rolagem em navegadores baseados em WebKit (Chrome, Safari, Edge, Opera) */
+.overflow-y-auto::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    background: transparent !important;
+}
+
+/* Esconde a barra de rolagem no Firefox */
+.overflow-y-auto {
+    scrollbar-width: none !important;
+}
+
+/* Esconde a barra de rolagem no Internet Explorer e Edge antigo */
+.overflow-y-auto {
+    -ms-overflow-style: none !important;
+}
