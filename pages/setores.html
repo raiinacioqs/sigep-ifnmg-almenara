@@ -46,42 +46,99 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar / Menu Lateral -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-none d-md-flex flex-column justify-content-between sidebar-green min-vh-100 p-3 position-fixed top-0 start-0">
-                <div>
-                    <div class="mb-4 pt-2 px-2 text-white">
-                        <h4 class="fw-bold mb-0">SIGEP</h4>
-                        <small class="text-white-50 text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">Gestão Patrimonial</small>
-                    </div>
+            <!-- Sidebar / Menu Lateral Padronizado -->
+            <nav id="sidebar"
+                class="col-md-3 col-lg-2 d-none d-md-flex flex-column vh-100 sidebar-green p-3 position-fixed top-0 start-0">
 
+                <!-- 1. TOPO: Logotipo / Título (Fixo) -->
+                <div class="mb-3 pt-2 px-2 text-white flex-shrink-0">
+                    <h4 class="fw-bold mb-0">SIGEP</h4>
+                    <small class="text-white-50 text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">Gestão
+                        Patrimonial</small>
+                </div>
+
+                <!-- 2. MEIO: Links do Menu (Com rolagem interna automática e barra oculta via CSS) -->
+                <div class="overflow-y-auto flex-grow-1 pe-1">
                     <ul class="nav flex-column gap-1">
-                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1" style="font-size: 0.65rem; letter-spacing: 1px;">Visão Geral</div>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="cadastro_entrada.html"><i class="bi bi-box-arrow-in-down me-2"></i> Cadastro de Entrada</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="estoque_atual.html"><i class="bi bi-box-seam me-2"></i> Estoque</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="historico.html"><i class="bi bi-clock-history me-2"></i> Histórico</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="manutencoes.html"><i class="bi bi-tools me-2"></i> Manutenções</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="solicitacao_retirada.html"><i class="bi bi-arrow-down-left-circle me-2"></i> Solicitação de Retirada</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="relatorios.html"><i class="bi bi-file-earmark-bar-graph me-2"></i> Relatórios</a></li>
-                        
-                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1" style="font-size: 0.65rem; letter-spacing: 1px;">Cadastros</div>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="categorias.html"><i class="bi bi-folder me-2"></i> Categorias</a></li>
-                        <li class="nav-item"><a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3" href="setores.html"><i class="bi bi-building me-2"></i> Setores</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3 hover-sidebar" href="responsaveis.html"><i class="bi bi-people me-2"></i> Responsáveis</a></li>
+                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-2 pb-1"
+                            style="font-size: 0.65rem; letter-spacing: 1px;">Visão Geral</div>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="dashboard.html">
+                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="cadastro_entrada.html">
+                                <i class="bi bi-box-arrow-in-down me-2"></i> Cadastro de Entrada
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="estoque_atual.html">
+                                <i class="bi bi-box-seam me-2"></i> Estoque
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="historico.html">
+                                <i class="bi bi-clock-history me-2"></i> Histórico
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="manutencoes.html">
+                                <i class="bi bi-tools me-2"></i> Manutenções
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="solicitacao_retirada.html">
+                                <i class="bi bi-arrow-down-left-circle me-2"></i> Solicitação de Retirada
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="relatorios.html">
+                                <i class="bi bi-file-earmark-bar-graph me-2"></i> Relatórios
+                            </a>
+                        </li>
+
+                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1"
+                            style="font-size: 0.65rem; letter-spacing: 1px;">Cadastros</div>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="categorias.html">
+                                <i class="bi bi-folder me-2"></i> Categorias
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3" href="setores.html">
+                                <i class="bi bi-building me-2"></i> Setores
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="responsaveis.html">
+                                <i class="bi bi-people me-2"></i> Responsáveis
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
-                <!-- Perfil Gestor -->
-                <div class="user-card bg-black bg-opacity-10 p-2 rounded-3 d-flex align-items-center justify-content-between text-white mt-auto">
+                <!-- 3. RODAPÉ: Perfil Gestor (Fixo embaixo) -->
+                <div
+                    class="user-card bg-black bg-opacity-10 p-2 rounded-3 d-flex align-items-center justify-content-between text-white mt-auto flex-shrink-0">
                     <div class="d-flex align-items-center overflow-hidden me-2">
-                        <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2" style="width: 36px; height: 36px; font-size: 0.85rem;">GA</div>
+                        <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2"
+                            style="width: 36px; height: 36px; font-size: 0.85rem;">GA</div>
                         <div class="overflow-hidden">
-                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;">Gestor Almoxarifado</h6>
-                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;">IFNMG - Almenara</small>
+                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;">Gestor Almoxarifado
+                            </h6>
+                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;">IFNMG -
+                                Almenara</small>
                         </div>
                     </div>
-                    <a href="../index.html" class="btn btn-sm btn-logout px-2 py-1 text-danger fw-semibold text-decoration-none flex-shrink-0" style="font-size: 0.75rem;">Sair</a>
+                    <a href="../index.html"
+                        class="btn btn-sm btn-logout px-2 py-1 text-danger fw-semibold text-decoration-none flex-shrink-0"
+                        style="font-size: 0.75rem;">Sair</a>
                 </div>
             </nav>
+
 
             <!-- Conteúdo Principal -->
             <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 offset-md-3 offset-lg-2">

@@ -48,49 +48,77 @@
 
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar / Menu Lateral -->
+            <!-- Sidebar / Menu Lateral Padronizado -->
             <nav id="sidebar"
                 class="col-md-3 col-lg-2 d-none d-md-flex flex-column vh-100 sidebar-green p-3 position-fixed top-0 start-0">
 
-                <!-- 1. TOPO: Logotipo / Título (Agora Fixo) -->
+                <!-- 1. TOPO: Logotipo / Título (Fixo) -->
                 <div class="mb-3 pt-2 px-2 text-white flex-shrink-0">
                     <h4 class="fw-bold mb-0">SIGEP</h4>
                     <small class="text-white-50 text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">Gestão
                         Patrimonial</small>
                 </div>
 
-                <!-- 2. MEIO: Links do Menu (Área que possui a barra de rolagem) -->
+                <!-- 2. MEIO: Links do Menu (Com rolagem interna automática e barra oculta via CSS) -->
                 <div class="overflow-y-auto flex-grow-1 pe-1">
                     <ul class="nav flex-column gap-1">
                         <div class="text-white-50 text-uppercase fw-bold px-3 pt-2 pb-1"
                             style="font-size: 0.65rem; letter-spacing: 1px;">Visão Geral</div>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="cadastro_entrada.html"><i class="bi bi-box-arrow-in-down me-2"></i> Cadastro de
-                                Entrada</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="servidor-estoque.html"><i class="bi bi-box-seam me-2"></i> Estoque</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="historico.html"><i class="bi bi-clock-history me-2"></i> Histórico</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="manutencoes.html"><i class="bi bi-tools me-2"></i> Manutenções</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="retirada.html"><i class="bi bi-arrow-down-left-circle me-2"></i> Solicitação de
-                                Retirada</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="relatorios.html"><i class="bi bi-file-earmark-bar-graph me-2"></i> Relatórios</a>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="dashboard.html">
+                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="cadastro_entrada.html">
+                                <i class="bi bi-box-arrow-in-down me-2"></i> Cadastro de Entrada
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="estoque_atual.html">
+                                <i class="bi bi-box-seam me-2"></i> Estoque
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="historico.html">
+                                <i class="bi bi-clock-history me-2"></i> Histórico
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="manutencoes.html">
+                                <i class="bi bi-tools me-2"></i> Manutenções
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="solicitacao_retirada.html">
+                                <i class="bi bi-arrow-down-left-circle me-2"></i> Solicitação de Retirada
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="relatorios.html">
+                                <i class="bi bi-file-earmark-bar-graph me-2"></i> Relatórios
+                            </a>
                         </li>
 
                         <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1"
                             style="font-size: 0.65rem; letter-spacing: 1px;">Cadastros</div>
-                        <li class="nav-item"><a
-                                class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="categorias.html"><i class="bi bi-folder me-2"></i> Categorias</a></li>
-                        <li class="nav-item"><a class="nav-link text-white text-opacity-75 py-2 px-3"
-                                href="setores.html"><i class="bi bi-building me-2"></i> Setores</a></li>
-                        <li class="nav-item"><a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3"
-                                href="responsaveis.html"><i class="bi bi-people me-2"></i> Responsáveis</a></li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="categorias.html">
+                                <i class="bi bi-folder me-2"></i> Categorias
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="setores.html">
+                                <i class="bi bi-building me-2"></i> Setores
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3" href="responsaveis.html">
+                                <i class="bi bi-people me-2"></i> Responsáveis
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -198,7 +226,7 @@
                                     <td class="py-3 px-3 fw-bold text-dark">Ana Lima</td>
                                     <td class="py-3 px-3 text-muted">ana.lima@ifnmg.edu.br</td>
                                     <td class="py-3 px-3 text-secondary">Secretaria Geral</td>
-                                    <td class="py-3 px-3 text-muted">Assistente em Administra...</td>
+                                    <td class="py-3 px-3 text-muted">Assistente em Administração</td>
                                     <td class="py-3 px-3 fw-bold text-dark">56 bens</td>
                                     <td class="py-3 px-3"><span
                                             class="badge bg-success text-white px-2 py-1 fw-semibold">Ativo</span></td>
@@ -246,7 +274,7 @@
                                     <td class="py-3 px-3 fw-bold text-dark">Maria Santos</td>
                                     <td class="py-3 px-3 text-muted">maria.santos@ifnmg.edu.br</td>
                                     <td class="py-3 px-3 text-secondary">Biblioteca</td>
-                                    <td class="py-3 px-3 text-muted">Bibliotecária-Documental...</td>
+                                    <td class="py-3 px-3 text-muted">Bibliotecária-Documental</td>
                                     <td class="py-3 px-3 fw-bold text-dark">20 bens</td>
                                     <td class="py-3 px-3"><span
                                             class="badge bg-danger text-white px-2 py-1 fw-semibold">Inativo</span></td>
