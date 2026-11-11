@@ -24,8 +24,8 @@ class Fornecedor extends Model
         return $this->hasMany(BemPatrimonial::class);
     }
 
-    public function movimentacoesEstoque(): HasMany
+    public function entradasEstoque(): HasMany
     {
-        return $this->hasMany(MovimentacaoEstoque::class);
+        return $this->hasMany(EntradaEstoque::class);
     }
 }
