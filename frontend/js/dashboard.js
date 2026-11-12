@@ -1,22 +1,26 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
-    // 1. Busca e Filtro em Tempo Real nas Tabelas
-    const searchInputs = document.querySelectorAll('input[placeholder*="Buscar"], input[placeholder*="Pesquisar"]');
+
+    // 1. Busca e filtro em tempo real nas tabelas
+    const searchInputs = document.querySelectorAll(
+        'input[placeholder*="Buscar"], input[placeholder*="Pesquisar"]'
+    );
+
     searchInputs.forEach(input => {
-        input.addEventListener('keyup', function (e) {
-            const term = e.target.value.toLowerCase();
+        input.addEventListener('input', function () {
+            const term = input.value.toLowerCase();
             const container = input.closest('.card, main');
+
             if (!container) return;
-            
-            // Filtra linhas de tabelas
+
             const rows = container.querySelectorAll('tbody tr');
+
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 row.style.display = text.includes(term) ? '' : 'none';
             });
 
-            // Filtra cards mobile (caso existam)
             const mobileCards = container.querySelectorAll('.d-md-none .card');
+
             mobileCards.forEach(card => {
                 const text = card.textContent.toLowerCase();
                 card.style.display = text.includes(term) ? '' : 'none';
@@ -24,71 +28,78 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // 2. Feedback ao Enviar Formulários (Cadastro, Retirada, Configurações)
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Operação realizada com sucesso! Os dados foram salvos no SIGEP - Campus Almenara.');
-            form.reset();
-        });
-    });
-
-    // 3. Confirmação para Ações Críticas (Excluir, Rejeitar)
+    // 2. Confirmação para ações críticas
     const actionButtons = document.querySelectorAll('button, .btn');
+
     actionButtons.forEach(btn => {
         const text = btn.textContent.trim().toLowerCase();
+
         if (text.includes('excluir') || text.includes('rejeitar')) {
-            btn.addEventListener('click', function (e) {
-                if (!confirm('Atenção: Tem certeza que deseja executar esta ação permanente?')) {
-                    e.preventDefault();
-                }
-            });
-        } else if (text.includes('aprovar') || text.includes('salvar') || text.includes('executar backup')) {
-            btn.addEventListener('click', function (e) {
-                if (btn.type !== 'submit' && !btn.closest('form')) {
-                    alert('Ação processada com sucesso no sistema!');
+            btn.addEventListener('click', function (evento) {
+                const confirmado = confirm(
+                    'Atenção: tem certeza de que deseja executar esta ação?'
+                );
+
+                if (!confirmado) {
+                    evento.preventDefault();
+                    evento.stopImmediatePropagation();
                 }
             });
         }
     });
 
-    // 4. Interatividade nas Pílulas de Filtro (Mobile)
-    const filterPills = document.querySelectorAll('.d-md-none .rounded-pill');
+    // 3. Interatividade nas pílulas de filtro mobile
+    const filterPills = document.querySelectorAll(
+        '.d-md-none .rounded-pill'
+    );
+
     filterPills.forEach(pill => {
         pill.addEventListener('click', function () {
             filterPills.forEach(p => {
-                p.classList.remove('btn-success', 'btn-dark', 'text-white');
-                p.classList.add('btn-light', 'border', 'text-secondary');
+                p.classList.remove(
+                    'btn-success',
+                    'btn-dark',
+                    'text-white'
+                );
+
+                p.classList.add(
+                    'btn-light',
+                    'border',
+                    'text-secondary'
+                );
             });
-            this.classList.remove('btn-light', 'border', 'text-secondary');
+
+            this.classList.remove(
+                'btn-light',
+                'border',
+                'text-secondary'
+            );
+
             this.classList.add('btn-success', 'text-white');
         });
     });
 
-    // 5. Identificação de páginas e aplicação de estilo de destaque
-    document.addEventListener("DOMContentLoaded", function () {
-    // Pega o nome do arquivo da página atual (ex: "manutencoes.html", "historico.html")
-    const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+    // 4. Identificação da página ativa na navegação mobile
+    const paginaAtual = window.location.pathname.split('/').pop();
 
-    // Seleciona todos os links da barra de navegação inferior mobile
-    const linksMobile = document.querySelectorAll(".mobile-nav a"); // Ajuste o seletor conforme a classe do seu container
+    const linksMobile = document.querySelectorAll('.mobile-bottom-nav a');
 
     linksMobile.forEach(link => {
-        const hrefLink = link.getAttribute("href");
+        const href = link.getAttribute('href');
 
-        // Se o href do link corresponder à página atual, aplica o estilo ativo
-        if (hrefLink === paginaAtual) {
-            link.classList.add("active");
-            link.style.backgroundColor = "#14532d";
-            link.style.opacity = "1";
+        if (!href) return;
+
+        const paginaLink = href.split('/').pop().split('?')[0];
+
+        if (paginaLink === paginaAtual) {
+            link.classList.add('active');
+            link.style.backgroundColor = '#14532d';
+            link.style.opacity = '1';
         } else {
-            // Remove o destaque das outras abas
-            link.classList.remove("active");
-            link.style.backgroundColor = "transparent"; // ou a cor padrão do fundo da barra
-            link.style.opacity = "0.75";
+            link.classList.remove('active');
+            link.style.backgroundColor = 'transparent';
+            link.style.opacity = '0.75';
         }
     });
-});
 
 });

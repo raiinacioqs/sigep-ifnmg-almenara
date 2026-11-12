@@ -129,3 +129,44 @@
 .overflow-y-auto {
     -ms-overflow-style: none !important;
 }
+
+/* Proteção visual durante a validação da autenticação */
+html:not([data-auth-status="authenticated"]) body {
+    visibility: hidden;
+}
+
+html:not([data-auth-status="authenticated"])::before {
+    content: "Validando sua sessão...";
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    color: #198754;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 55px;
+}
+
+html:not([data-auth-status="authenticated"])::after {
+    content: "";
+    position: fixed;
+    top: calc(50% - 25px);
+    left: calc(50% - 18px);
+    width: 36px;
+    height: 36px;
+    border: 4px solid #d1e7dd;
+    border-top-color: #198754;
+    border-radius: 50%;
+    animation: sigep-loading 0.8s linear infinite;
+    z-index: 100000;
+}
+
+@keyframes sigep-loading {
+    to {
+        transform: rotate(360deg);
+    }
+}

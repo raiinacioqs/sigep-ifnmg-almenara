@@ -1,12 +1,14 @@
-/**
- * Autenticação demonstrativa do SIGEP.
- * ATENÇÃO: esta implementação é apenas para demonstração acadêmica.
- * A autenticação e a autorização reais deverão ser implementadas no Laravel.
- */
 (function () {
     'use strict';
 
-    const CHAVE_SESSAO = 'sigep_demo_user';
+    const CHAVE_TOKEN = 'sigep_token';
+    const CHAVE_USUARIO = 'sigep_usuario';
+
+    const perfis = {
+        'Administrador': 'administrador',
+        'Gestor de Almoxarifado': 'gestor_almoxarifado',
+        'Servidor': 'servidor'
+    };
 
     const paginasPorPerfil = {
         administrador: [
@@ -15,6 +17,7 @@
             'admin-logs.html',
             'admin-configuracoes.html'
         ],
+
         gestor_almoxarifado: [
             'dashboard.html',
             'cadastro_entrada.html',
@@ -27,6 +30,7 @@
             'setores.html',
             'responsaveis.html'
         ],
+
         servidor: [
             'servidor-estoque.html',
             'servidor-retirada.html'
@@ -35,56 +39,136 @@
 
     function obterUsuario() {
         try {
-            const dados = sessionStorage.getItem(CHAVE_SESSAO);
+            const dados = sessionStorage.getItem(CHAVE_USUARIO);
             return dados ? JSON.parse(dados) : null;
         } catch (erro) {
-            console.error('Não foi possível recuperar a sessão demonstrativa:', erro);
-            sessionStorage.removeItem(CHAVE_SESSAO);
+            console.error('Erro ao recuperar usuário:', erro);
+            sessionStorage.removeItem(CHAVE_USUARIO);
             return null;
         }
     }
 
-    function encerrarSessao() {
-        sessionStorage.removeItem(CHAVE_SESSAO);
-        window.location.href = '../index.html';
+    function limparSessao() {
+        sessionStorage.removeItem(CHAVE_TOKEN);
+        sessionStorage.removeItem(CHAVE_USUARIO);
     }
 
-    function protegerPagina() {
-        const usuario = obterUsuario();
-        const paginaAtual = window.location.pathname.split('/').pop();
+    function redirecionarLogin(motivo = 'login') {
+        window.location.replace(`../index.html?motivo=${motivo}`);
+    }
 
-        if (!usuario || !paginasPorPerfil[usuario.perfil]) {
-            window.location.replace('../index.html?motivo=login');
-            return;
+    async function encerrarSessao() {
+        try {
+            if (window.SIGEPAPI.obterToken()) {
+                await window.SIGEPAPI.requisicao('/logout', {
+                    method: 'POST'
+                });
+            }
+        } catch (erro) {
+            console.error('Erro ao encerrar sessão no servidor:', erro);
+        } finally {
+            limparSessao();
+            window.location.replace('../index.html');
         }
+    }
 
-        const paginasPermitidas = paginasPorPerfil[usuario.perfil];
-        if (!paginasPermitidas.includes(paginaAtual)) {
-            window.location.replace('../index.html?motivo=permissao');
-            return;
-        }
+    function atualizarIdentificacao(usuario) {
+        const perfilSlug = perfis[usuario.perfil];
 
-        document.documentElement.dataset.perfil = usuario.perfil;
+        document.documentElement.dataset.perfil = perfilSlug;
         document.documentElement.dataset.usuario = usuario.nome;
 
-        // Atualiza os elementos de identificação que já existirem no HTML.
         document.querySelectorAll('[data-usuario-nome]').forEach((elemento) => {
             elemento.textContent = usuario.nome;
         });
-        document.querySelectorAll('[data-usuario-perfil]').forEach((elemento) => {
-            elemento.textContent = usuario.nomePerfil;
-        });
 
-        // Os links de saída existentes apontam para index.html.
-        document.querySelectorAll('a[href="../index.html"], a[href="index.html"]').forEach((link) => {
-            const texto = link.textContent.toLowerCase();
-            if (texto.includes('sair')) {
-                link.addEventListener('click', (evento) => {
+        document.querySelectorAll('[data-usuario-perfil]').forEach((elemento) => {
+            elemento.textContent = usuario.perfil;
+        });
+    }
+
+    function configurarLinksSaida() {
+        document.querySelectorAll('a').forEach((link) => {
+            const destino = link.getAttribute('href') || '';
+            const texto = link.textContent.trim().toLowerCase();
+
+            if (
+                texto.includes('sair') &&
+                (destino.includes('index.html') || destino === '#')
+            ) {
+                link.addEventListener('click', function (evento) {
                     evento.preventDefault();
                     encerrarSessao();
                 });
             }
         });
+    }
+
+    async function protegerPagina() {
+        document.documentElement.dataset.authStatus = 'checking';
+        
+        const token = sessionStorage.getItem(CHAVE_TOKEN);
+        
+
+        if (!token) {
+            redirecionarLogin();
+            return;
+        }
+
+        try {
+            const resposta = await window.SIGEPAPI.requisicao('/user', {
+                method: 'GET'
+            });
+
+            const usuario = resposta.usuario;
+
+            if (!usuario || usuario.status !== 'ativo') {
+                limparSessao();
+                redirecionarLogin();
+                return;
+            }
+
+            const perfilSlug = perfis[usuario.perfil];
+
+            if (!perfilSlug || !paginasPorPerfil[perfilSlug]) {
+                redirecionarLogin('permissao');
+                return;
+            }
+
+            const paginaAtual = window.location.pathname
+                .split('/')
+                .pop();
+
+            if (!paginasPorPerfil[perfilSlug].includes(paginaAtual)) {
+                redirecionarLogin('permissao');
+                return;
+            }
+
+            sessionStorage.setItem(
+                CHAVE_USUARIO,
+                JSON.stringify(usuario)
+            );
+
+            atualizarIdentificacao(usuario);
+            configurarLinksSaida();
+
+            document.documentElement.dataset.authStatus = 'authenticated';
+
+        } catch (erro) {
+            console.error('Erro ao validar autenticação:', erro);
+
+            if (erro.status === 401 || erro.status === 403) {
+                limparSessao();
+                redirecionarLogin();
+                return;
+            }
+
+            document.documentElement.dataset.authStatus = 'error';
+
+            alert(
+                'Não foi possível validar sua sessão. Verifique a conexão com o servidor e tente novamente.'
+            );
+        }
     }
 
     window.SIGEPAuth = {

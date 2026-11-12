@@ -129,12 +129,10 @@ Route::middleware('auth:sanctum')->group(function () {
         [EntradaEstoqueController::class, 'show']
     );
 
-    // Cadastro restrito à gestão
-    Route::middleware('perfil:Administrador,Gestor de Almoxarifado')
-        ->group(function () {
-            Route::post(
-                '/entradas-estoque',
-                [EntradaEstoqueController::class, 'store']
-            );
-        });
+    
+    Route::post(
+        '/entradas-estoque',
+        [EntradaEstoqueController::class, 'store']
+    );
+       
 });
