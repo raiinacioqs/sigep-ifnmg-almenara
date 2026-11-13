@@ -14,7 +14,7 @@ use App\Http\Controllers\Api\EntradaEstoqueController;
 Route::post('/login', [AuthController::class, 'login']);
 
 // Rotas para usuários autenticados
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
 
     Route::get('/user', [AuthController::class, 'me']);
 
@@ -129,10 +129,5 @@ Route::middleware('auth:sanctum')->group(function () {
         [EntradaEstoqueController::class, 'show']
     );
 
-    
-    Route::post(
-        '/entradas-estoque',
-        [EntradaEstoqueController::class, 'store']
-    );
        
 });

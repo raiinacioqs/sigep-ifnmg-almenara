@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'perfil' => \App\Http\Middleware\VerificarPerfil::class,
+            'usuario.ativo' => \App\Http\Middleware\VerificarUsuarioAtivo::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

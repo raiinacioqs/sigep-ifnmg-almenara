@@ -20,7 +20,7 @@ class UpdateCategoriaRequest extends FormRequest
             'nome' => [
                 'required',
                 'string',
-                'max:255',
+                'max:100',
                 Rule::unique('categorias', 'nome')
                     ->where(fn ($query) => $query->where('tipo', $this->input('tipo')))
                     ->ignore($categoriaId),

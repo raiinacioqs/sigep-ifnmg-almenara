@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Rules\CnpjValido;
 
 class UpdateFornecedorRequest extends FormRequest
 {
@@ -17,15 +18,16 @@ class UpdateFornecedorRequest extends FormRequest
         $fornecedorId = $this->route('id');
 
         return [
-            'razao_social' => ['required', 'string', 'max:255'],
-            'nome_fantasia' => ['nullable', 'string', 'max:255'],
+            'razao_social' => ['required', 'string', 'max:150'],
+            'nome_fantasia' => ['nullable', 'string', 'max:150'],
             'cnpj' => [
                 'required',
                 'string',
                 'max:18',
+                new CnpjValido(),
                 Rule::unique('fornecedores', 'cnpj')->ignore($fornecedorId),
             ],
-            'email' => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'max:150'],
             'telefone' => ['nullable', 'string', 'max:20'],
             'endereco' => ['nullable', 'string'],
             'status' => ['required', Rule::in(['ativo', 'inativo'])],
