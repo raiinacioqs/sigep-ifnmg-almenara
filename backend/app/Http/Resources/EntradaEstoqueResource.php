@@ -34,7 +34,13 @@ class EntradaEstoqueResource extends JsonResource
             }),
 
             'numero_nota_fiscal' => $this->numero_nota_fiscal,
-            'arquivo_nota_fiscal' => $this->arquivo_nota_fiscal,
+            'possui_nota_fiscal' => !empty($this->arquivo_nota_fiscal),
+            'url_nota_fiscal' => $this->when(
+                !empty($this->arquivo_nota_fiscal),
+                 fn () => url(
+                     "/api/entradas-estoque/{$this->id}/nota-fiscal"
+                 )
+            ),
             'data_entrada' => $this->data_entrada?->format('Y-m-d'),
             'observacao' => $this->observacao,
 

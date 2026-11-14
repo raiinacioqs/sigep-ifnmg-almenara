@@ -109,25 +109,34 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
             Route::delete('/materiais/{id}', [MaterialController::class, 'destroy']);
         });
 
+    
     // Entradas de estoque: operações restritas à gestão
     Route::middleware('perfil:Administrador,Gestor de Almoxarifado')
         ->group(function () {
+
+            // Cadastro de entrada
             Route::post(
                 '/entradas-estoque',
                 [EntradaEstoqueController::class, 'store']
             );
+
+            // Consulta das entradas
+            Route::get(
+                '/entradas-estoque',
+                [EntradaEstoqueController::class, 'index']
+            );
+
+            // Consulta de uma entrada específica
+            Route::get(
+                '/entradas-estoque/{id}',
+                [EntradaEstoqueController::class, 'show']
+            );
+
+            // Download da nota fiscal
+            Route::get(
+                '/entradas-estoque/{id}/nota-fiscal',
+                [EntradaEstoqueController::class, 'baixarNotaFiscal']
+            );
         });
 
-    // Entradas de estoque
-    Route::get(
-        '/entradas-estoque',
-        [EntradaEstoqueController::class, 'index']
-    );
-
-    Route::get(
-        '/entradas-estoque/{id}',
-        [EntradaEstoqueController::class, 'show']
-    );
-
-       
 });

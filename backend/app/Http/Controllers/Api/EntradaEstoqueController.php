@@ -7,6 +7,8 @@ use App\Http\Requests\Api\StoreEntradaEstoqueRequest;
 use App\Http\Resources\EntradaEstoqueResource;
 use App\Services\EntradaEstoqueService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EntradaEstoqueController extends Controller
 {
@@ -61,5 +63,31 @@ class EntradaEstoqueController extends Controller
         return (new EntradaEstoqueResource($entrada))
             ->response()
             ->setStatusCode(201);
+    }
+     /**
+     * Realiza o download da nota fiscal de uma entrada.
+     */
+    public function baixarNotaFiscal(string $id): StreamedResponse
+    {
+        $entrada = $this->entradaEstoqueService->buscarPorId(
+            (int) $id
+        );
+
+        $caminho = $entrada->arquivo_nota_fiscal;
+
+        if (
+            !$caminho ||
+            !Storage::disk('local')->exists($caminho)
+        ) {
+            abort(404, 'Nota fiscal não encontrada.');
+        }
+
+        return Storage::disk('local')->download(
+            $caminho,
+            'nota-fiscal-entrada-' . $entrada->id . '.pdf',
+            [
+                'Content-Type' => 'application/pdf',
+            ]
+        );
     }
 }

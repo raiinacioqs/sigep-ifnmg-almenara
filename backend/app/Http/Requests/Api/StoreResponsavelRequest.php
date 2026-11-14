@@ -21,9 +21,9 @@ class StoreResponsavelRequest extends FormRequest
                 'max:20',
                 Rule::unique('responsaveis', 'siape'),
             ],
-            'nome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'cargo' => ['required', 'string', 'max:255'],
+            'nome' => ['required', 'string', 'max:150'],
+            'email' => ['required', 'email', 'max:150'],
+            'cargo' => ['required', 'string', 'max:150'],
             'setor_id' => [
                 'required',
                 Rule::exists('setores', 'id')

@@ -13,8 +13,8 @@ return new class extends Migration
             $table->id();
             $table->string('siape', 20)->unique();
             $table->string('nome', 150);
-            $table->string('email', 150)->nullable();
-            $table->string('cargo', 100)->nullable();
+            $table->string('email', 150);
+            $table->string('cargo', 100);
 
             $table->foreignId('setor_id')
                 ->constrained('setores')

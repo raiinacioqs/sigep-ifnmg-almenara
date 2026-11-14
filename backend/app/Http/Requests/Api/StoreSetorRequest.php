@@ -15,11 +15,11 @@ class StoreSetorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required', 'string', 'max:255'],
+            'nome' => ['required', 'string', 'max:120'],
             'sigla' => [
                 'required',
                 'string',
-                'max:255',
+                'max:20',
                 Rule::unique('setores', 'sigla'),
             ],
             'localizacao' => ['nullable', 'string', 'max:255'],
