@@ -23,4 +23,14 @@ return new class extends Migration
     {
         Schema::dropIfExists('setores');
     }
+
+    private function criarSetor(array $sobrescrever = []): Setor
+    {
+        return Setor::create(array_merge([
+            'nome' => 'Setor de Teste',
+            'sigla' => 'ST',
+            'localizacao' => 'Campus Almenara',
+            'status' => 'ativo',
+        ], $sobrescrever));
+    }
 };

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\SetorController;
 use App\Http\Controllers\Api\ResponsavelController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\EntradaEstoqueController;
+use App\Http\Controllers\Api\SolicitacaoRetiradaController;
 
 // Rota pública
 Route::post('/login', [AuthController::class, 'login']);
@@ -42,11 +43,18 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
 
     // Servidor
     Route::middleware('perfil:Servidor')->prefix('servidor')->group(function () {
+
         Route::get('/teste', function () {
             return response()->json([
                 'message' => 'Acesso autorizado ao servidor.',
             ]);
         });
+
+        // Abertura de solicitação de retirada
+        Route::post(
+            '/solicitacoes-retirada',
+            [SolicitacaoRetiradaController::class, 'store']
+        );
     });
 
     // Categorias: consulta para usuários autenticados

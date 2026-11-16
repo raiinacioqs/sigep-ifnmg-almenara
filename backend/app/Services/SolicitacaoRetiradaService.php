@@ -1,0 +1,154 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\BemPatrimonial;
+use App\Models\Categoria;
+use App\Models\Material;
+use App\Models\SolicitacaoRetirada;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+
+class SolicitacaoRetiradaService
+{
+    /**
+     * Registra uma solicitação de retirada.
+     *
+     * A abertura não altera o estoque nem movimenta
+     * bens patrimoniais.
+     */
+    public function criar(
+        array $dados,
+        User $usuario
+    ): SolicitacaoRetirada {
+        return DB::transaction(function () use ($dados, $usuario) {
+
+            if (!$usuario->setor_id) {
+                throw ValidationException::withMessages([
+                    'setor_id' =>
+                        'O usuário não possui setor vinculado.',
+                ]);
+            }
+
+            $setor = $usuario->setor;
+
+            if (!$setor || $setor->status !== 'ativo') {
+                throw ValidationException::withMessages([
+                    'setor_id' =>
+                        'O setor do usuário não existe ou está inativo.',
+                ]);
+            }
+
+            $solicitacao = SolicitacaoRetirada::create([
+                'usuario_id' => $usuario->id,
+                'setor_id' => $setor->id,
+                'data_solicitacao' => now()->toDateString(),
+                'data_necessaria' => $dados['data_necessaria'],
+                'data_limite' => $dados['data_limite'] ?? null,
+                'justificativa' => $dados['justificativa'],
+                'status' => 'pendente',
+                'observacao' => $dados['observacao'] ?? null,
+            ]);
+
+            foreach ($dados['itens'] as $indice => $item) {
+
+                $temMaterial = !empty($item['material_id']);
+                $temBem = !empty($item['bem_patrimonial_id']);
+
+                if ($temMaterial === $temBem) {
+                    throw ValidationException::withMessages([
+                        "itens.{$indice}" =>
+                            'Informe exatamente um material ou bem patrimonial.',
+                    ]);
+                }
+
+                if ($temMaterial) {
+                    $material = Material::query()
+                        ->where('status', 'ativo')
+                        ->find($item['material_id']);
+
+                    if (!$material) {
+                        throw ValidationException::withMessages([
+                            "itens.{$indice}.material_id" =>
+                                'Material não encontrado ou inativo.',
+                        ]);
+                    }
+
+                    $categoria = Categoria::find($material->categoria_id);
+
+                    if (
+                        !$categoria ||
+                        $categoria->status !== 'ativo' ||
+                        $categoria->tipo !== 'consumo'
+                    ) {
+                        throw ValidationException::withMessages([
+                            "itens.{$indice}.material_id" =>
+                                'O material deve pertencer a uma categoria de consumo ativa.',
+                        ]);
+                    }
+                }
+
+                if ($temBem) {
+                    $bem = BemPatrimonial::query()
+                        ->where('status', 'ativo')
+                        ->find($item['bem_patrimonial_id']);
+
+                    if (!$bem) {
+                        throw ValidationException::withMessages([
+                            "itens.{$indice}.bem_patrimonial_id" =>
+                                'Bem patrimonial não encontrado ou inativo.',
+                        ]);
+                    }
+
+                    if (
+                        !isset($item['quantidade_solicitada']) ||
+                        !is_numeric($item['quantidade_solicitada']) ||
+                        (float) $item['quantidade_solicitada'] !== 1.0
+                    ) {
+                        throw ValidationException::withMessages([
+                            "itens.{$indice}.quantidade_solicitada" =>
+                                'A quantidade solicitada para um bem patrimonial deve ser exatamente 1.',
+                        ]);
+                    }
+
+                    $categoria = Categoria::find($bem->categoria_id);
+
+                    if (
+                        !$categoria ||
+                        $categoria->status !== 'ativo' ||
+                        $categoria->tipo !== 'patrimonio'
+                    ) {
+                        throw ValidationException::withMessages([
+                            "itens.{$indice}.bem_patrimonial_id" =>
+                                'O bem deve pertencer a uma categoria patrimonial ativa.',
+                        ]);
+                    }
+                }
+
+                $solicitacao->itens()->create([
+                    'material_id' => $temMaterial
+                        ? $item['material_id']
+                        : null,
+
+                    'bem_patrimonial_id' => $temBem
+                        ? $item['bem_patrimonial_id']
+                        : null,
+
+                    'quantidade_solicitada' =>
+                        $item['quantidade_solicitada'],
+
+                    'observacao' => $item['observacao'] ?? null,
+                ]);
+            }
+
+            return $solicitacao->load([
+                'usuario',
+                'setor',
+                'itens.material.categoria',
+                'itens.bemPatrimonial.categoria',
+            ]);
+
+        }, 3);
+    }
+}
