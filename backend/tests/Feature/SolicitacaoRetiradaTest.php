@@ -40,19 +40,45 @@ class SolicitacaoRetiradaTest extends TestCase
         ]);
     }
 
-    private function criarMaterialComEstoque(
-        float $quantidade = 20
-    ): Material {
-        $categoria = Categoria::create([
-            'nome' => 'Materiais de Escritório',
-            'descricao' => 'Categoria utilizada nos testes',
-            'tipo' => 'consumo',
+    private function criarUsuarioGestor(): User
+    {
+        $role = Role::create([
+            'nome' => 'Gestor de Almoxarifado',
+            'descricao' => 'Perfil utilizado nos testes',
+        ]);
+
+        $setor = Setor::create([
+            'nome' => 'Setor de Gestão',
+            'sigla' => 'SG',
+            'localizacao' => 'Campus Almenara',
             'status' => 'ativo',
         ]);
 
+        return User::factory()->create([
+            'role_id' => $role->id,
+            'setor_id' => $setor->id,
+            'status' => 'ativo',
+        ]);
+    }
+
+    private function criarMaterialComEstoque(
+    float $quantidade = 20,
+    string $nome = 'Papel A4'
+    ): Material {
+        $categoria = Categoria::firstOrCreate(
+            [
+                'nome' => 'Materiais de Escritório',
+                'tipo' => 'consumo',
+            ],
+            [
+                'descricao' => 'Categoria utilizada nos testes',
+                'status' => 'ativo',
+            ]
+        );
+
         $material = Material::create([
-            'nome' => 'Papel A4',
-            'descricao' => 'Papel branco formato A4',
+            'nome' => $nome,
+            'descricao' => 'Material utilizado nos testes',
             'categoria_id' => $categoria->id,
             'unidade_medida' => 'Resma',
             'quantidade_minima' => 5,
@@ -564,5 +590,452 @@ class SolicitacaoRetiradaTest extends TestCase
 
         $this->assertDatabaseCount('solicitacoes_retirada', 0);
         $this->assertDatabaseCount('itens_solicitacao_retirada', 0);
+    }
+
+    public function test_gestor_consegue_listar_solicitacoes_pela_api(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $material = $this->criarMaterialComEstoque();
+
+        $service = app(SolicitacaoRetiradaService::class);
+
+        $solicitacao = $service->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $gestor = $this->criarUsuarioGestor();
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $resposta = $this->withToken($token)
+            ->getJson('/api/gestao/solicitacoes-retirada');
+
+        $resposta
+            ->assertOk()
+            ->assertJsonPath('data.0.id', $solicitacao->id)
+            ->assertJsonPath('data.0.status', 'pendente')
+            ->assertJsonPath('data.0.usuario_id', $servidor->id)
+            ->assertJsonPath('meta.per_page', 10);
+    }
+
+    public function test_gestor_consegue_filtrar_solicitacoes_por_status(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $material = $this->criarMaterialComEstoque();
+
+        $service = app(SolicitacaoRetiradaService::class);
+
+        $solicitacao = $service->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $gestor = $this->criarUsuarioGestor();
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $resposta = $this->withToken($token)
+            ->getJson('/api/gestao/solicitacoes-retirada?status=pendente');
+
+        $resposta
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $solicitacao->id)
+            ->assertJsonPath('data.0.status', 'pendente');
+    }
+
+    public function test_gestor_consegue_consultar_solicitacao_especifica(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $material = $this->criarMaterialComEstoque();
+
+        $service = app(SolicitacaoRetiradaService::class);
+
+        $solicitacao = $service->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $gestor = $this->criarUsuarioGestor();
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $resposta = $this->withToken($token)
+            ->getJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}"
+            );
+
+        $resposta
+            ->assertOk()
+            ->assertJsonPath('data.id', $solicitacao->id)
+            ->assertJsonPath('data.status', 'pendente')
+            ->assertJsonPath('data.usuario_id', $servidor->id)
+            ->assertJsonPath('data.itens.0.material_id', $material->id);
+    }
+
+    public function test_consulta_de_solicitacao_inexistente_retorna_404(): void
+    {
+        $gestor = $this->criarUsuarioGestor();
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->getJson('/api/gestao/solicitacoes-retirada/999999')
+            ->assertNotFound();
+    }
+
+    public function test_servidor_nao_consegue_acessar_listagem_de_solicitacoes_da_gestao(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+
+        $token = $servidor->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->getJson('/api/gestao/solicitacoes-retirada')
+            ->assertForbidden();
+    }
+
+
+    public function test_gestor_atende_solicitacao_e_registra_saida_no_estoque(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $gestor = $this->criarUsuarioGestor();
+        $material = $this->criarMaterialComEstoque(20);
+
+        $service = app(SolicitacaoRetiradaService::class);
+
+        $solicitacao = $service->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $resposta = $this->withToken($token)
+            ->postJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender"
+            );
+
+        $resposta
+            ->assertOk()
+            ->assertJsonPath('data.id', $solicitacao->id)
+            ->assertJsonPath('data.status', 'atendida')
+            ->assertJsonPath('data.analisado_por', $gestor->id);
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material->id,
+            'quantidade_atual' => 17,
+        ]);
+
+        $this->assertDatabaseHas('movimentacoes_estoque', [
+            'material_id' => $material->id,
+            'usuario_id' => $gestor->id,
+            'solicitacao_retirada_id' => $solicitacao->id,
+            'tipo' => 'saida',
+            'quantidade' => 3,
+        ]);
+
+        $this->assertDatabaseCount('movimentacoes_estoque', 1);
+    }
+
+
+    public function test_gestor_atende_solicitacao_e_transfere_bem_patrimonial(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $gestor = $this->criarUsuarioGestor();
+
+        $categoria = Categoria::create([
+            'nome' => 'Equipamentos',
+            'tipo' => 'patrimonio',
+            'status' => 'ativo',
+        ]);
+
+        $responsavel = Responsavel::create([
+            'siape' => '123456',
+            'nome' => 'Responsável de Teste',
+            'email' => 'responsavel.teste@local.test',
+            'cargo' => 'Técnico',
+            'setor_id' => $servidor->setor_id,
+            'status' => 'ativo',
+        ]);
+
+            $setorOrigem = Setor::create([
+            'nome' => 'Setor de Origem',
+            'sigla' => 'SO',
+            'localizacao' => 'Campus Almenara',
+            'status' => 'ativo',
+        ]);
+
+        $bem = BemPatrimonial::create([
+            'numero_tombo' => 'TOMBO-ATENDIMENTO-001',
+            'descricao' => 'Computador para transferência',
+            'categoria_id' => $categoria->id,
+            'setor_id' => $setorOrigem->id,
+            'responsavel_id' => $responsavel->id,
+            'status' => 'ativo',
+        ]);
+
+        $dados = [
+            'data_necessaria' => '2026-12-01',
+            'data_limite' => '2026-12-05',
+            'justificativa' => 'Transferência de equipamento.',
+            'observacao' => null,
+            'itens' => [
+                [
+                    'bem_patrimonial_id' => $bem->id,
+                    'quantidade_solicitada' => 1,
+                    'observacao' => null,
+                ],
+            ],
+        ];
+
+        $solicitacao = app(SolicitacaoRetiradaService::class)
+            ->criar($dados, $servidor);
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $resposta = $this->withToken($token)
+            ->postJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender"
+            );
+
+        $resposta
+            ->assertOk()
+            ->assertJsonPath('data.status', 'atendida');
+
+        $this->assertDatabaseHas('bens_patrimoniais', [
+            'id' => $bem->id,
+            'setor_id' => $servidor->setor_id,
+            'responsavel_id' => $responsavel->id,
+        ]);
+
+        $this->assertDatabaseHas('movimentacoes_patrimoniais', [
+            'bem_patrimonial_id' => $bem->id,
+            'solicitacao_retirada_id' => $solicitacao->id,
+            'setor_origem_id' => $setorOrigem->id,
+            'setor_destino_id' => $servidor->setor_id,
+            'responsavel_origem_id' => $responsavel->id,
+            'responsavel_destino_id' => null,
+            'usuario_id' => $gestor->id,
+            'tipo' => 'transferencia',
+        ]);
+    }
+
+
+    public function test_atendimento_com_estoque_insuficiente_nao_altera_dados(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $gestor = $this->criarUsuarioGestor();
+        $material = $this->criarMaterialComEstoque(2);
+
+        $solicitacao = app(SolicitacaoRetiradaService::class)->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->postJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender"
+            )
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('estoque');
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material->id,
+            'quantidade_atual' => 2,
+        ]);
+
+        $this->assertDatabaseHas('solicitacoes_retirada', [
+            'id' => $solicitacao->id,
+            'status' => 'pendente',
+        ]);
+
+        $this->assertDatabaseCount('movimentacoes_estoque', 0);
+    }
+
+    public function test_solicitacao_nao_pode_ser_atendida_duas_vezes(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $gestor = $this->criarUsuarioGestor();
+        $material = $this->criarMaterialComEstoque(20);
+
+        $solicitacao = app(SolicitacaoRetiradaService::class)->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $url = "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender";
+
+        $this->withToken($token)
+            ->postJson($url)
+            ->assertOk()
+            ->assertJsonPath('data.status', 'atendida');
+
+        $this->withToken($token)
+            ->postJson($url)
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('status');
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material->id,
+            'quantidade_atual' => 17,
+        ]);
+
+        $this->assertDatabaseCount('movimentacoes_estoque', 1);
+
+        $this->assertDatabaseHas('solicitacoes_retirada', [
+            'id' => $solicitacao->id,
+            'status' => 'atendida',
+        ]);
+    }
+
+    public function test_servidor_nao_pode_atender_solicitacao(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $material = $this->criarMaterialComEstoque(20);
+
+        $solicitacao = app(SolicitacaoRetiradaService::class)->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $token = $servidor->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->postJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender"
+            )
+            ->assertForbidden();
+
+        $this->assertDatabaseHas('solicitacoes_retirada', [
+            'id' => $solicitacao->id,
+            'status' => 'pendente',
+        ]);
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material->id,
+            'quantidade_atual' => 20,
+        ]);
+
+        $this->assertDatabaseCount('movimentacoes_estoque', 0);
+    }
+
+    public function test_administrador_nao_pode_atender_solicitacao(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $material = $this->criarMaterialComEstoque(20);
+
+        $solicitacao = app(SolicitacaoRetiradaService::class)->criar(
+            $this->dadosSolicitacao($material),
+            $servidor
+        );
+
+        $role = Role::create([
+            'nome' => 'Administrador',
+            'descricao' => 'Administrador do sistema',
+        ]);
+
+        $setor = Setor::create([
+            'nome' => 'Setor Administrativo',
+            'sigla' => 'SA',
+            'status' => 'ativo',
+        ]);
+
+        $administrador = User::factory()->create([
+            'role_id' => $role->id,
+            'setor_id' => $setor->id,
+            'status' => 'ativo',
+        ]);
+
+        $token = $administrador->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->postJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender"
+            )
+            ->assertForbidden();
+
+        $this->assertDatabaseHas('solicitacoes_retirada', [
+            'id' => $solicitacao->id,
+            'status' => 'pendente',
+        ]);
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material->id,
+            'quantidade_atual' => 20,
+        ]);
+
+        $this->assertDatabaseCount('movimentacoes_estoque', 0);
+    }
+
+    public function test_atender_solicitacao_inexistente_retorna_404(): void
+    {
+        $gestor = $this->criarUsuarioGestor();
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->postJson('/api/gestao/solicitacoes-retirada/99999/atender')
+            ->assertNotFound();
+    }
+
+    public function test_atendimento_com_varios_itens_e_estoque_insuficiente_reverte_toda_operacao(): void
+    {
+        $servidor = $this->criarUsuarioServidor();
+        $gestor = $this->criarUsuarioGestor();
+
+        $material1 = $this->criarMaterialComEstoque(20, 'Papel A4');
+        $material2 = $this->criarMaterialComEstoque(2, 'Papel A3');
+
+        $dados = [
+            'data_necessaria' => now()->addDays(2)->toDateString(),
+            'justificativa' => 'Teste de atomicidade',
+            'itens' => [
+                [
+                    'material_id' => $material1->id,
+                    'quantidade_solicitada' => 3,
+                ],
+                [
+                    'material_id' => $material2->id,
+                    'quantidade_solicitada' => 3,
+                ],
+            ],
+        ];
+
+        $solicitacao = app(SolicitacaoRetiradaService::class)->criar(
+            $dados,
+            $servidor
+        );
+
+        $token = $gestor->createToken('teste')->plainTextToken;
+
+        $this->withToken($token)
+            ->postJson(
+                "/api/gestao/solicitacoes-retirada/{$solicitacao->id}/atender"
+            )
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('estoque');
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material1->id,
+            'quantidade_atual' => 20,
+        ]);
+
+        $this->assertDatabaseHas('estoques', [
+            'material_id' => $material2->id,
+            'quantidade_atual' => 2,
+        ]);
+
+        $this->assertDatabaseHas('solicitacoes_retirada', [
+            'id' => $solicitacao->id,
+            'status' => 'pendente',
+        ]);
+
+        $this->assertDatabaseCount('movimentacoes_estoque', 0);
     }
 }

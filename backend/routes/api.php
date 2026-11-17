@@ -34,10 +34,31 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
     Route::middleware('perfil:Administrador,Gestor de Almoxarifado')
         ->prefix('gestao')
         ->group(function () {
+
             Route::get('/teste', function () {
                 return response()->json([
                     'message' => 'Acesso autorizado à gestão do SIGEP.',
                 ]);
+            });
+
+            // Consulta das solicitações de retirada
+            Route::get(
+                '/solicitacoes-retirada',
+                [SolicitacaoRetiradaController::class, 'index']
+            );
+
+            // Consulta de uma solicitação específica
+            Route::get(
+                '/solicitacoes-retirada/{id}',
+                [SolicitacaoRetiradaController::class, 'show']
+            );
+
+            // Atendimento restrito ao Gestor de Almoxarifado
+            Route::middleware('perfil:Gestor de Almoxarifado')->group(function () {
+                Route::post(
+                    '/solicitacoes-retirada/{id}/atender',
+                    [SolicitacaoRetiradaController::class, 'atender']
+                );
             });
         });
 

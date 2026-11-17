@@ -11,6 +11,7 @@ class MovimentacaoPatrimonial extends Model
 
     protected $fillable = [
         'bem_patrimonial_id',
+        'solicitacao_retirada_id',
         'setor_origem_id',
         'setor_destino_id',
         'responsavel_origem_id',
@@ -31,6 +32,11 @@ class MovimentacaoPatrimonial extends Model
     public function bemPatrimonial(): BelongsTo
     {
         return $this->belongsTo(BemPatrimonial::class);
+    }
+
+    public function solicitacaoRetirada(): BelongsTo
+    {
+        return $this->belongsTo(SolicitacaoRetirada::class);
     }
 
     public function setorOrigem(): BelongsTo
