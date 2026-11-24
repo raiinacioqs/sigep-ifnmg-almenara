@@ -1,0 +1,124 @@
+/* Cartões de materiais para dispositivos móveis */
+.materiais-mobile-lista {
+    width: 100%;
+}
+
+.materiais-mobile-card {
+    border: 1px solid #e9ecef !important;
+    transition: box-shadow 0.2s ease;
+}
+
+.materiais-mobile-card:active {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08) !important;
+}
+
+.materiais-mobile-info {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 8px;
+    height: 100%;
+    overflow-wrap: anywhere;
+}
+
+.materiais-mobile-info small {
+    font-size: 0.7rem;
+}
+
+.materiais-mobile-info strong {
+    font-size: 0.85rem;
+    color: #198754;
+}
+
+@media (max-width: 767.98px) {
+    #listaMateriaisMobile {
+        display: block;
+    }
+
+    #listaMateriaisMobile .materiais-mobile-card {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    #listaMateriaisMobile {
+        display: none !important;
+    }
+}
+
+
+/* Modal de materiais adaptado para dispositivos móveis */
+@media (max-width: 767.98px) {
+    #modalMaterial .modal-dialog {
+        margin: 0.5rem;
+        max-width: none;
+        min-height: calc(100% - 1rem);
+        display: flex;
+        align-items: center;
+    }
+
+    #modalMaterial .modal-content {
+        width: 100%;
+        max-height: 90dvh;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    #modalMaterial .modal-header {
+        flex-shrink: 0;
+        padding: 1rem;
+    }
+
+    #modalMaterial .modal-body {
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 1rem;
+    }
+
+    #modalMaterial .modal-footer {
+        flex-shrink: 0;
+        padding: 0.75rem 1rem;
+        background-color: #ffffff;
+    }
+
+    #modalMaterial .modal-footer button {
+        flex: 1;
+    }
+}
+
+
+/* Correção do rodapé e rolagem interna do modal mobile */
+@media (max-width: 767.98px) {
+    #modalMaterial .modal-content {
+        display: flex;
+        flex-direction: column;
+        height: 90dvh;
+        max-height: 90dvh;
+    }
+
+    #modalMaterial .modal-header {
+        flex: 0 0 auto;
+    }
+
+    #modalMaterial .modal-body {
+        flex: 0 1 auto;
+        height: auto;
+        min-height: 0;
+        max-height: calc(90dvh - 140px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        box-sizing: border-box; 
+    }
+
+    #modalMaterial .modal-footer {
+        display: flex;
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 2;
+        background-color: #ffffff;
+        border-top: 1px solid #dee2e6;
+    }
+
+    #modalMaterial .modal-footer button {
+        flex: 1;
+    }
+}

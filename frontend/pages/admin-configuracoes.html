@@ -31,8 +31,10 @@
                     <div class="d-flex align-items-center overflow-hidden me-2">
                         <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2" style="width: 36px; height: 36px; font-size: 0.85rem;">AD</div>
                         <div class="overflow-hidden">
-                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;">Administrador</h6>
-                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;">Admin Sistema</small>
+                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;"
+                                data-usuario-nome>Administrador</h6>
+                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;"
+                                data-usuario-perfil>Administrador</small>
                         </div>
                     </div>
                     <a href="../index.html" class="btn btn-sm btn-logout px-2 py-1 text-danger fw-semibold text-decoration-none flex-shrink-0" style="font-size: 0.75rem;">Sair</a>
@@ -50,7 +52,7 @@
 
                 <div class="mb-4">
                     <h3 class="fw-bold text-dark mb-1 fs-4">Configurações do Sistema</h3>
-                    <p class="text-muted small mb-0">Ajuste os parâmetros gerais do SIGEP, controle regras de estoque mínimo e gerencie políticas de backup.</p>
+                    <p class="text-muted small mb-0">Gerencie os parâmetros gerais do SIGEP e as políticas de segurança e backup do banco de dados.</p>
                 </div>
 
                 <!-- Backup do Banco de Dados -->
@@ -81,54 +83,6 @@
                         <button class="btn btn-success btn-sm px-3 py-2 fw-semibold">Executar Backup Manual</button>
                         <button class="btn btn-light btn-sm px-3 py-2 fw-semibold border bg-opacity-50 text-secondary">Histórico de Backups</button>
                     </div>
-                </div>
-
-                <!-- Estoque Mínimo Padrão -->
-                <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
-                    <h5 class="fw-bold text-dark mb-2">Estoque Mínimo Padrão</h5>
-                    <p class="text-muted small mb-3">Defina limites mínimos de segurança para notificação automática.</p>
-                    
-                    <div class="table-responsive mb-3">
-                        <table class="table align-middle mb-0">
-                            <thead class="text-muted small border-bottom">
-                                <tr>
-                                    <th class="fw-semibold pb-2">Material</th>
-                                    <th class="fw-semibold pb-2">Qtd. Mínima</th>
-                                    <th class="fw-semibold pb-2">Alerta</th>
-                                </tr>
-                            </thead>
-                            <tbody class="small">
-                                <tr>
-                                    <td class="text-dark fw-semibold">Papel A4 Resma</td>
-                                    <td class="text-secondary">10 resmas</td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" checked>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-dark fw-semibold">Cartucho de Toner HP</td>
-                                    <td class="text-secondary">5 unidades</td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" checked>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-dark fw-semibold">Caneta Esferográfica Azul</td>
-                                    <td class="text-secondary">50 unidades</td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox">
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <button class="btn btn-sm btn-outline-success fw-semibold px-3">+ Adicionar Nova Regra</button>
                 </div>
 
                 <!-- Parâmetros Gerais do Sistema -->

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiais - SIGEP - IFNMG Campus Almenara</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/materiais.css">
+</head>
+
+<body class="bg-light pb-5 pb-md-0">
+
+    <!-- Cabeçalho mobile -->
+    <div class="d-flex d-md-none justify-content-between align-items-center mobile-top-bar px-3 py-3 shadow-sm">
+        <div class="d-flex align-items-center gap-2">
+            <div class="mobile-top-logo-box shadow-sm">
+                <img src="../img/almenara_horizontal_jpg.jpg" alt="Logo IFNMG Almenara"
+                    style="max-height: 24px; width: auto;">
+            </div>
+            <div>
+                <h6 class="fw-bold text-white mb-0">SIGEP</h6>
+                <small class="text-white text-opacity-75">GESTÃO PATRIMONIAL</small>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="bg-black bg-opacity-25 text-white fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px;">GA</div>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                <li><span class="dropdown-item-text fw-semibold">Gestor Almoxarifado</span></li>
+                <li><span class="dropdown-item-text text-muted small">IFNMG - Almenara</span></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-danger" href="../index.html">
+                        <i class="bi bi-box-arrow-right me-2"></i>Sair do Sistema
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Menu lateral -->
+            <nav id="sidebar"
+                class="col-md-3 col-lg-2 d-none d-md-flex flex-column vh-100 sidebar-green p-3 position-fixed top-0 start-0">
+
+                <div class="overflow-y-auto flex-grow-1 pe-1">
+                    <div class="mb-4 pt-2 px-2 text-white">
+                        <h4 class="fw-bold mb-0">SIGEP</h4>
+                        <small class="text-white-50 text-uppercase">Gestão Patrimonial</small>
+                    </div>
+
+                    <ul class="nav flex-column gap-1">
+                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-2 pb-1 small">Visão Geral</div>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="dashboard.html">
+                                <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="cadastro_entrada.html">
+                                <i class="bi bi-box-arrow-in-down me-2"></i>Cadastro de Entrada
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="estoque_atual.html">
+                                <i class="bi bi-box-seam me-2"></i>Estoque
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="historico.html">
+                                <i class="bi bi-clock-history me-2"></i>Histórico
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="manutencoes.html">
+                                <i class="bi bi-tools me-2"></i>Manutenções
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="solicitacao_retirada.html">
+                                <i class="bi bi-arrow-down-left-circle me-2"></i>Solicitação de Retirada
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="relatorios.html">
+                                <i class="bi bi-file-earmark-bar-graph me-2"></i>Relatórios
+                            </a>
+                        </li>
+
+                        <div class="text-white-50 text-uppercase fw-bold px-3 pt-3 pb-1 small">Cadastros</div>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="categorias.html">
+                                <i class="bi bi-folder me-2"></i>Categorias
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active text-white fw-semibold bg-dark bg-opacity-25 rounded-2 py-2 px-3"
+                                href="materiais.html">
+                                <i class="bi bi-box-seam me-2"></i>Materiais
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="setores.html">
+                                <i class="bi bi-building me-2"></i>Setores
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white text-opacity-75 py-2 px-3" href="responsaveis.html">
+                                <i class="bi bi-people me-2"></i>Responsáveis
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="user-card bg-black bg-opacity-10 p-2 rounded-3 d-flex align-items-center justify-content-between text-white mt-auto">
+                    <div class="d-flex align-items-center overflow-hidden me-2">
+                        <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center me-2"
+                            style="width: 36px; height: 36px;">GA</div>
+                        <div class="overflow-hidden">
+                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;"
+                                data-usuario-nome>Gestor Almoxarifado</h6>
+                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;"
+                                data-usuario-perfil>Gestor de Almoxarifado</small>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-logout text-danger">Sair</a>
+                </div>
+            </nav>
+
+            <!-- Conteúdo principal -->
+            <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 offset-md-3 offset-lg-2">
+
+                <div class="d-none d-md-flex justify-content-between align-items-center bg-white p-3 rounded-3 shadow-sm mb-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold text-dark fs-6">Sistema de Gestão Patrimonial</span>
+                        <span class="badge bg-light text-secondary border fw-normal">CAMPUS ALMENARA</span>
+                    </div>
+                    <img src="../img/almenara_horizontal_jpg.jpg" alt="Logo IFNMG Almenara"
+                        style="max-height: 32px; width: auto;">
+                </div>
+
+                <!-- Título -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                    <div>
+                        <h3 class="fw-bold text-dark mb-1 fs-4">Gerenciamento de Materiais</h3>
+                        <p class="text-muted small mb-0">
+                            Cadastre e gerencie os materiais de consumo do almoxarifado.
+                        </p>
+                    </div>
+
+                    <button type="button" id="btnNovoMaterial"
+                        class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2">
+                        <i class="bi bi-plus-lg"></i>Novo Material
+                    </button>
+                </div>
+
+                <!-- Indicadores -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-lg-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Total de materiais</small>
+                                    <h4 class="fw-bold mb-0" id="totalMateriais">0</h4>
+                                </div>
+                                <i class="bi bi-box-seam fs-3 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Materiais ativos</small>
+                                    <h4 class="fw-bold mb-0" id="materiaisAtivos">0</h4>
+                                </div>
+                                <i class="bi bi-check-circle fs-3 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Materiais inativos</small>
+                                    <h4 class="fw-bold mb-0" id="materiaisInativos">0</h4>
+                                </div>
+                                <i class="bi bi-pause-circle fs-3 text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pesquisa e filtros -->
+                <div class="card border-0 shadow-sm p-3 rounded-4 mb-4">
+                    <div class="row g-3">
+                        <div class="col-12 col-lg-5">
+                            <label for="buscaMaterial" class="form-label small fw-semibold">Pesquisar material</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input type="search" id="buscaMaterial"
+                                    class="form-control bg-light border-start-0"
+                                    placeholder="Nome ou descrição...">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <label for="filtroCategoria" class="form-label small fw-semibold">Categoria</label>
+                            <select id="filtroCategoria" class="form-select form-select-sm">
+                                <option value="">Todas as categorias</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <label for="filtroStatus" class="form-label small fw-semibold">Situação</label>
+                            <select id="filtroStatus" class="form-select form-select-sm">
+                                <option value="">Todas as situações</option>
+                                <option value="ativo">Ativos</option>
+                                <option value="inativo">Inativos</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensagens -->
+                <div id="mensagemMateriais" aria-live="polite"></div>
+
+                <!-- Tabela -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 d-none d-md-block">
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light small">
+                                <tr>
+                                    <th class="py-3 px-3">Material</th>
+                                    <th class="py-3 px-3">Categoria</th>
+                                    <th class="py-3 px-3">Unidade</th>
+                                    <th class="py-3 px-3 text-center">Estoque atual</th>
+                                    <th class="py-3 px-3 text-center">Mínimo</th>
+                                    <th class="py-3 px-3 text-center">Situação</th>
+                                    <th class="py-3 px-3 text-end">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaMateriais" class="small">
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        Carregando materiais...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-footer bg-white d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 py-3">
+                        <small class="text-muted" id="resumoMateriais">Carregando...</small>
+                        <nav aria-label="Paginação dos materiais">
+                            <ul class="pagination pagination-sm mb-0" id="paginacaoMateriais"></ul>
+                        </nav>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Lista de materiais para dispositivos móveis -->
+    <div id="listaMateriaisMobile" class="materiais-mobile-lista d-md-none mb-4">
+        <div class="text-center text-muted py-4">
+            Carregando materiais...
+        </div>
+    </div>
+
+    <!-- Modal de cadastro e edição -->
+    <div class="modal fade" id="modalMaterial" tabindex="-1" aria-labelledby="tituloModalMaterial" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="tituloModalMaterial">Novo Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+
+                <form id="formMaterial">
+                    <div class="modal-body">
+                        <input type="hidden" id="materialId">
+
+                        <div class="mb-3">
+                            <label for="nomeMaterial" class="form-label fw-semibold">Nome *</label>
+                            <input type="text" class="form-control" id="nomeMaterial"
+                                name="nome" maxlength="150" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descricaoMaterial" class="form-label fw-semibold">Descrição</label>
+                            <textarea class="form-control" id="descricaoMaterial"
+                                name="descricao" rows="2"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="categoriaMaterial" class="form-label fw-semibold">Categoria *</label>
+                            <select class="form-select" id="categoriaMaterial" name="categoria_id" required>
+                                <option value="">Selecione uma categoria</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="unidadeMaterial" class="form-label fw-semibold">Unidade de medida *</label>
+                            <select class="form-select" id="unidadeMaterial" name="unidade_medida" required>
+                                <option value="">Selecione uma unidade</option>
+                                <option value="Unidade">Unidade</option>
+                                <option value="Resma">Resma</option>
+                                <option value="Caixa">Caixa</option>
+                                <option value="Pacote">Pacote</option>
+                                <option value="Rolo">Rolo</option>
+                                <option value="Litro">Litro</option>
+                                <option value="Quilograma">Quilograma</option>
+                                <option value="Metro">Metro</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="quantidadeMinima" class="form-label fw-semibold">Quantidade mínima *</label>
+                            <input type="number" class="form-control" id="quantidadeMinima"
+                                name="quantidade_minima" min="0" step="0.001" value="0" required>
+                            <small class="text-muted">Quantidade mínima para alerta de estoque baixo.</small>
+                        </div>
+
+                        <div class="mb-3 d-none" id="grupoStatusMaterial">
+                            <label for="statusMaterial" class="form-label fw-semibold">Situação *</label>
+                            <select class="form-select" id="statusMaterial" name="status">
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                            </select>
+                        </div>
+
+                        <div id="mensagemFormularioMaterial" aria-live="polite"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" id="btnSalvarMaterial">
+                            <i class="bi bi-check-lg me-1"></i>Salvar Material
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegação mobile -->
+    <nav class="navbar fixed-bottom mobile-bottom-nav d-flex d-md-none py-2 px-2 shadow-lg">
+        <a href="dashboard.html" class="text-center text-decoration-none py-1 px-2 text-white opacity-75">
+            <i class="bi bi-grid-fill d-block fs-5"></i>Dashboard
+        </a>
+        <a href="cadastro_entrada.html" class="text-center text-decoration-none py-1 px-2 text-white opacity-75">
+            <i class="bi bi-box-arrow-in-down d-block fs-5"></i>Cadastro
+        </a>
+        <a href="estoque_atual.html" class="text-center text-decoration-none py-1 px-2 text-white opacity-75">
+            <i class="bi bi-box-seam d-block fs-5"></i>Estoque
+        </a>
+        <a href="categorias.html" class="text-center text-decoration-none py-1 px-2 text-white opacity-75">
+            <i class="bi bi-folder d-block fs-5"></i>Categorias
+        </a>
+        <a href="materiais.html" class="active text-center text-decoration-none py-1 px-2 text-white rounded-2"
+            style="background-color: #14532d;">
+            <i class="bi bi-box-seam d-block fs-5"></i>Materiais
+        </a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/core/api.js"></script>
+    <script src="../js/core/auth.js"></script>
+    <script src="../js/modules/materiais.js"></script>
+</body>
+</html>

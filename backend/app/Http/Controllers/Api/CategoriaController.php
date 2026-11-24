@@ -16,7 +16,8 @@ class CategoriaController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Categoria::query();
+        $query = Categoria::query()
+            ->withCount(['materiais', 'bensPatrimoniais']);
 
         if ($request->filled('tipo')) {
             $query->where('tipo', $request->tipo);

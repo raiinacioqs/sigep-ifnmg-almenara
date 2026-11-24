@@ -15,6 +15,8 @@ class CategoriaResource extends JsonResource
             'descricao' => $this->descricao,
             'tipo' => $this->tipo,
             'status' => $this->status,
+            'materiais_count' => $this->materiais_count,
+            'bens_patrimoniais_count' => $this->bens_patrimoniais_count,
             'criado_em' => $this->created_at,
             'atualizado_em' => $this->updated_at,
         ];

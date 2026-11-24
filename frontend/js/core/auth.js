@@ -15,7 +15,7 @@
             'admin-usuarios.html',
             'admin-solicitacoes-usuarios.html',
             'admin-logs.html',
-            'admin-configuracoes.html'
+            'admin-configuracoes.html',
         ],
 
         gestor_almoxarifado: [
@@ -28,7 +28,8 @@
             'relatorios.html',
             'categorias.html',
             'setores.html',
-            'responsaveis.html'
+            'responsaveis.html',
+            'materiais.html'
         ],
 
         servidor: [
@@ -84,6 +85,18 @@
 
         document.querySelectorAll('[data-usuario-perfil]').forEach((elemento) => {
             elemento.textContent = usuario.perfil;
+        });
+
+        const iniciais = usuario.nome
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(parte => parte.charAt(0).toLocaleUpperCase('pt-BR'))
+            .join('');
+
+        document.querySelectorAll('[data-usuario-iniciais]').forEach((elemento) => {
+            elemento.textContent = iniciais || 'SV';
         });
     }
 

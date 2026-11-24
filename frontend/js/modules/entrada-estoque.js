@@ -595,6 +595,13 @@ function editarItem(indice, campo, valor) {
 
     if (!item) return;
 
+    if (campo === 'valor_unitario' && valor.trim() === '') {
+        item.valor_unitario = null;
+        atualizarListaItens();
+        return;
+
+    }
+
     const numero = Number(valor);
 
     if (!Number.isFinite(numero)) {

@@ -127,10 +127,10 @@
                         <div class="bg-white text-success fw-bold rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2"
                             style="width: 36px; height: 36px; font-size: 0.85rem;">GA</div>
                         <div class="overflow-hidden">
-                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;">Gestor Almoxarifado
-                            </h6>
-                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;">IFNMG -
-                                Almenara</small>
+                            <h6 class="mb-0 text-truncate" style="font-size: 0.8rem; font-weight: 600;"
+                                data-usuario-nome>Gestor Almoxarifado</h6>
+                            <small class="text-white-50 text-truncate d-block" style="font-size: 0.65rem;"
+                                data-usuario-perfil>Gestor de Almoxarifado</small>
                         </div>
                     </div>
                     <a href="../index.html"
@@ -159,7 +159,8 @@
                         <h3 class="fw-bold text-dark mb-1 fs-4">Cadastro de Setores</h3>
                         <p class="text-muted small mb-0">Gerencie os setores e departamentos acadêmicos e administrativos do campus.</p>
                     </div>
-                    <button class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto">
+                    <button type="button" id="btnNovoSetor"
+                        class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto">
                         <i class="bi bi-plus-lg"></i> Novo Setor
                     </button>
                 </div>
@@ -170,7 +171,9 @@
                         <div class="col-12 col-md-9">
                             <div class="input-group input-group-sm bg-light rounded-2 border-0">
                                 <span class="input-group-text bg-transparent border-0 text-muted"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control bg-transparent border-0 shadow-none" placeholder="Buscar por Nome do Setor ou Responsável...">
+                                <input type="search" id="buscaSetor"
+                                class="form-control bg-transparent border-0 shadow-none"
+                                placeholder="Buscar por nome ou sigla do setor...">
                             </div>
                         </div>
                         <div class="col-12 col-md-3">

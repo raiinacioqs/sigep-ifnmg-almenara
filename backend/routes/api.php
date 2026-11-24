@@ -83,7 +83,7 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
     Route::get('/categorias/{id}', [CategoriaController::class, 'show']);
 
     // Categorias: operações restritas à gestão
-    Route::middleware('perfil:Administrador,Gestor de Almoxarifado')
+    Route::middleware('perfil:Gestor de Almoxarifado')
         ->group(function () {
             Route::post('/categorias', [CategoriaController::class, 'store']);
             Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
@@ -131,7 +131,7 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
     Route::get('/materiais/{id}', [MaterialController::class, 'show']);
 
     // Operações de gestão de materiais
-    Route::middleware('perfil:Administrador,Gestor de Almoxarifado')
+    Route::middleware('perfil:Gestor de Almoxarifado')
         ->group(function () {
             Route::post('/materiais', [MaterialController::class, 'store']);
             Route::put('/materiais/{id}', [MaterialController::class, 'update']);
