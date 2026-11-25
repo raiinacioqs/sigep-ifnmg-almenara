@@ -170,3 +170,72 @@ html:not([data-auth-status="authenticated"])::after {
         transform: rotate(360deg);
     }
 }
+
+/* Paginação dos setores - botões verdes */
+#paginacaoSetores .page-link {
+    color: #fff;
+    background-color: #198754;
+    border: 1px solid #198754;
+    border-radius: 8px;
+    margin: 0 3px;
+    padding: 7px 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+#paginacaoSetores .page-link:hover {
+    color: #fff;
+    background-color: #146c43;
+    border-color: #146c43;
+}
+
+#paginacaoSetores .page-item.active .page-link {
+    color: #fff;
+    background-color: #146c43;
+    border-color: #146c43;
+    box-shadow: 0 2px 5px rgba(25, 135, 84, 0.25);
+}
+
+#paginacaoSetores .page-item.disabled .page-link {
+    color: #e9ecef;
+    background-color: #a3cfbb;
+    border-color: #a3cfbb;
+    opacity: 0.8;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Paginação de Setores: manter o verde mesmo desabilitada */
+#paginacaoSetores .page-link:disabled,
+#paginacaoSetores .page-item.disabled .page-link {
+    background-color: #198754;
+    border-color: #198754;
+    color: #fff;
+    opacity: 1;
+}
+
+/* Paginação - Setores */
+#paginacaoSetores .page-link {
+    color: #198754;
+    border-color: #198754;
+    background-color: #fff;
+}
+
+#paginacaoSetores .page-link:hover {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+
+#paginacaoSetores .page-item.active .page-link {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+
+#paginacaoSetores .page-item.disabled .page-link {
+    color: #198754;
+    background-color: #e8f3ed;
+    border-color: #198754;
+    opacity: 1;
+}
