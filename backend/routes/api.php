@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ResponsavelController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\EntradaEstoqueController;
 use App\Http\Controllers\Api\SolicitacaoRetiradaController;
+use App\Http\Controllers\Api\Admin\UsuarioController;
 
 // Rota pública
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,13 +23,29 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Somente administrador
-    Route::middleware('perfil:Administrador')->prefix('admin')->group(function () {
-        Route::get('/teste', function () {
-            return response()->json([
-                'message' => 'Acesso autorizado ao administrador.',
-            ]);
+    Route::middleware('perfil:Administrador')
+        ->prefix('admin')
+        ->group(function () {
+
+            // Gestão de usuários
+            Route::get('/usuarios', [UsuarioController::class, 'index']);
+
+            Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update']);
+
+            Route::patch(
+                '/usuarios/{usuario}/status',
+                [UsuarioController::class, 'atualizarStatus']
+            );
+
+            Route::get('/teste', function () {
+                return response()->json([
+                    'message' => 'Acesso autorizado ao administrador.',
+                ]);
+            });
+
+            // Consulta de usuários cadastrados
+            Route::get('/usuarios', [UsuarioController::class, 'index']);
         });
-    });
 
     // Administrador e gestor do almoxarifado
     Route::middleware('perfil:Administrador,Gestor de Almoxarifado')
@@ -70,6 +87,13 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
                 'message' => 'Acesso autorizado ao servidor.',
             ]);
         });
+
+        // Consulta do histórico de solicitações do servidor autenticado
+        Route::get(
+            '/solicitacoes-retirada',
+            [SolicitacaoRetiradaController::class, 'minhasSolicitacoes']
+        );
+
 
         // Abertura de solicitação de retirada
         Route::post(

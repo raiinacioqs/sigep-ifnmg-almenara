@@ -7,6 +7,119 @@ document.addEventListener('DOMContentLoaded', () => {
     const paginacao = document.getElementById('paginacaoResponsaveis');
     const textoPaginacaoMobile = document.getElementById('textoPaginacaoResponsaveisMobile');
     const paginacaoMobile = document.getElementById('paginacaoResponsaveisMobile');
+    const selectSetor = document.getElementById('setorResponsavel');
+    const btnNovoResponsavel = document.getElementById('btnNovoResponsavel');
+    const elementoModalResponsavel = document.getElementById('modalResponsavel');
+    const formularioResponsavel = document.getElementById('formResponsavel');
+    const btnSalvarResponsavel = document.getElementById('btnSalvarResponsavel');
+    const mensagemFormularioResponsavel = document.getElementById('mensagemFormularioResponsavel');
+
+    btnNovoResponsavel.addEventListener('click', () => {
+        formularioResponsavel.reset();
+
+        mensagemFormularioResponsavel.className = 'alert d-none';
+        mensagemFormularioResponsavel.textContent = '';
+
+        const modal = bootstrap.Modal.getOrCreateInstance(
+            elementoModalResponsavel
+        );
+
+        modal.show();
+    });
+
+    formularioResponsavel.addEventListener('submit', async (evento) => {
+        evento.preventDefault();
+
+        const camposObrigatorios = [
+            document.getElementById('siapeResponsavel'),
+            document.getElementById('nomeResponsavel'),
+            document.getElementById('emailResponsavel'),
+            document.getElementById('cargoResponsavel'),
+            selectSetor
+        ];
+
+        const campoVazio = camposObrigatorios.find(
+            campo => !campo.value.trim()
+        );
+
+        const campoSiape = document.getElementById('siapeResponsavel');
+
+        if (campoSiape.value.trim().length > 20) {
+            mensagemFormularioResponsavel.className = 'alert alert-warning';
+            mensagemFormularioResponsavel.textContent =
+                'O SIAPE deve ter no máximo 20 caracteres.';
+
+            campoSiape.focus();
+            return;
+        }
+
+        if (campoVazio) {
+            mensagemFormularioResponsavel.className = 'alert alert-warning';
+            mensagemFormularioResponsavel.textContent =
+                'Preencha todos os campos obrigatórios.';
+
+            campoVazio.focus();
+            return;
+        }
+
+        const campoEmail = document.getElementById('emailResponsavel');
+
+        const formatoEmailValido =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(campoEmail.value.trim());
+
+        if (!formatoEmailValido) {
+            mensagemFormularioResponsavel.className = 'alert alert-warning';
+            mensagemFormularioResponsavel.textContent =
+                'Informe um endereço de e-mail válido.';
+
+            campoEmail.focus();
+            return;
+        }
+
+        const dadosResponsavel = {
+            siape: document.getElementById('siapeResponsavel').value.trim(),
+            nome: document.getElementById('nomeResponsavel').value.trim(),
+            email: document.getElementById('emailResponsavel').value.trim(),
+            cargo: document.getElementById('cargoResponsavel').value.trim(),
+            setor_id: Number(selectSetor.value)
+        };
+
+        btnSalvarResponsavel.disabled = true;
+        btnSalvarResponsavel.textContent = 'Salvando...';
+
+        try {
+            const resposta = await SIGEPAPI.requisicao('/responsaveis', {
+                method: 'POST',
+                body: dadosResponsavel
+            });
+
+            mensagemFormularioResponsavel.className = 'alert alert-success';
+            mensagemFormularioResponsavel.textContent =
+                resposta.message || 'Responsável cadastrado com sucesso.';
+
+            await carregarResponsaveis();
+            formularioResponsavel.reset();
+
+            bootstrap.Modal.getInstance(elementoModalResponsavel)?.hide();
+        } catch (erro) {
+            console.error('Erro ao cadastrar responsável:', erro);
+
+            mensagemFormularioResponsavel.className = 'alert alert-danger';
+
+            const errosValidacao = erro.dados?.errors;
+
+            if (errosValidacao) {
+                mensagemFormularioResponsavel.textContent =
+                    Object.values(errosValidacao).flat().join(' ');
+            } else {
+                mensagemFormularioResponsavel.textContent =
+                    erro.message || 'Não foi possível cadastrar o responsável.';
+            }
+        } finally {
+            btnSalvarResponsavel.disabled = false;
+            btnSalvarResponsavel.textContent = 'Salvar Responsável';
+        }
+    });
     
 
     async function carregarResponsaveis(busca = '', pagina = 1) {
@@ -99,6 +212,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
+            textoPaginacaoMobile.textContent = meta.total > 0
+            ? `Exibindo ${meta.from}-${meta.to} de ${meta.total}`
+            : 'Nenhum responsável';
+
+            paginacaoMobile.innerHTML = `
+                <li class="page-item ${paginaAtual <= 1 ? 'disabled' : ''}">
+                    <button class="page-link" data-page="${paginaAtual - 1}"
+                        ${paginaAtual <= 1 ? 'disabled' : ''}>
+                        Anterior
+                    </button>
+                </li>
+
+                <li class="page-item active">
+                    <span class="page-link">${paginaAtual} de ${ultimaPagina}</span>
+                </li>
+
+                <li class="page-item ${paginaAtual >= ultimaPagina ? 'disabled' : ''}">
+                    <button class="page-link" data-page="${paginaAtual + 1}"
+                        ${paginaAtual >= ultimaPagina ? 'disabled' : ''}>
+                        Próximo
+                    </button>
+                </li>
+            `;
+
+            paginacaoMobile.querySelectorAll('button[data-page]').forEach(botao => {
+                botao.addEventListener('click', () => {
+                    const pagina = Number(botao.dataset.page);
+
+                    if (pagina >= 1 && pagina <= ultimaPagina && pagina !== paginaAtual) {
+                        carregarResponsaveis(campoBusca.value, pagina);
+                    }
+                });
+            });
+
         } catch (erro) {
             console.error('Erro ao carregar responsáveis:', erro);
             corpoTabela.innerHTML = `
@@ -107,6 +254,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         Não foi possível carregar os responsáveis.
                     </td>
                 </tr>
+            `;
+        }
+    }
+
+    async function carregarSetoresResponsavel() {
+        try {
+            const resposta = await SIGEPAPI.requisicao('/setores');
+            const setores = resposta.data;
+
+            selectSetor.innerHTML = `
+                <option value="">Selecione o setor</option>
+            `;
+
+            setores.forEach(setor => {
+                const opcao = document.createElement('option');
+                opcao.value = setor.id;
+                opcao.textContent = `${setor.sigla} - ${setor.nome}`;
+
+                selectSetor.appendChild(opcao);
+            });
+        } catch (erro) {
+            console.error('Erro ao carregar setores:', erro);
+            selectSetor.innerHTML = `
+                <option value="">Não foi possível carregar os setores</option>
             `;
         }
     }
@@ -120,4 +291,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     carregarResponsaveis();
+    carregarSetoresResponsavel();
 });

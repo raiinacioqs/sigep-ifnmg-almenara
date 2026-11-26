@@ -80,4 +80,24 @@ class SolicitacaoRetiradaController extends Controller
 
         return new SolicitacaoRetiradaResource($solicitacao);
     }
+
+    /**
+     * Lista somente as solicitações do servidor autenticado.
+     */
+    public function minhasSolicitacoes(Request $request)
+    {
+        $filtros = $request->validate([
+            'status' => [
+                'sometimes',
+                'in:pendente,atendida,rejeitada',
+            ],
+        ]);
+
+        $solicitacoes = $this->solicitacaoRetiradaService
+            ->listarDoUsuario($filtros, $request->user());
+
+        return SolicitacaoRetiradaResource::collection(
+            $solicitacoes
+        );
+    }
 }

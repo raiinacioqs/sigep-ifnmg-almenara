@@ -178,6 +178,33 @@ class SolicitacaoRetiradaService
         return $consulta->paginate(10);
     }
 
+
+    /**
+     * Lista somente as solicitações do servidor autenticado.
+     */
+    public function listarDoUsuario(
+        array $filtros,
+        User $usuario
+    ) {
+        $consulta = SolicitacaoRetirada::query()
+            ->with([
+                'usuario',
+                'setor',
+                'itens.material.categoria',
+                'itens.bemPatrimonial.categoria',
+            ])
+            ->where('usuario_id', $usuario->id)
+            ->orderByDesc('data_solicitacao')
+            ->orderByDesc('id');
+
+        if (!empty($filtros['status'])) {
+            $consulta->where('status', $filtros['status']);
+        }
+
+        return $consulta->paginate(10);
+    }
+
+
         /**
      * Busca uma solicitação específica pelo ID.
      */

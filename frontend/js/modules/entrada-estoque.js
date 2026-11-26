@@ -51,7 +51,7 @@ async function buscarTodasPaginas(endpoint) {
         }
 
         registros = registros.concat(resposta.data);
-        ultimaPagina = resposta.meta?.last_page || 1;
+        ultimaPagina = resposta.last_page || resposta.meta?.last_page || 1;
 
         pagina++;
     } while (pagina <= ultimaPagina);
@@ -366,8 +366,8 @@ function atualizarListaItens() {
 
         campoQuantidade.type = 'number';
         campoQuantidade.className = 'form-control form-control-sm';
-        campoQuantidade.min = '0';
-        campoQuantidade.step = '0';
+        campoQuantidade.min = '0.01';
+        campoQuantidade.step = 'any';
         campoQuantidade.value = item.quantidade;
         campoQuantidade.dataset.editarItem = 'quantidade';
         campoQuantidade.dataset.indice = indice;

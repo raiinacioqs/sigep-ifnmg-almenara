@@ -28,32 +28,103 @@
     }
 
     
-    function configurarEventos() {
-        // Pesquisa de categorias
-        elementos.busca.addEventListener('input', () => {
-            clearTimeout(temporizadorBusca);
+        function configurarEventos() {
+            // Pesquisa de categorias
+            elementos.busca.addEventListener('input', () => {
+                clearTimeout(temporizadorBusca);
 
-            temporizadorBusca = setTimeout(() => {
+                temporizadorBusca = setTimeout(() => {
+                    paginaAtual = 1;
+                    carregarCategorias();
+                }, 400);
+            });
+
+            // Filtro por situação
+            elementos.filtroStatus.addEventListener('change', () => {
                 paginaAtual = 1;
                 carregarCategorias();
-            }, 400);
-        });
+            });
 
-        // Filtro por situação
-        elementos.filtroStatus.addEventListener('change', () => {
-            paginaAtual = 1;
-            carregarCategorias();
-        });
+            // Paginação desktop
+            elementos.paginacao.addEventListener('click', evento => {
+                const botao = evento.target.closest('[data-pagina]');
 
-        // Paginação desktop
-        elementos.paginacao.addEventListener('click', evento => {
-            const botao = evento.target.closest('[data-pagina]');
+                if (!botao || botao.disabled) return;
 
-            if (!botao || botao.disabled) return;
+                paginaAtual = Number(botao.dataset.pagina);
+                carregarCategorias();
+            });
 
-            paginaAtual = Number(botao.dataset.pagina);
-            carregarCategorias();
-        });
+            // Ações de editar e inativar
+            async function tratarAcaoCategoria(evento) {
+                const botao = evento.target.closest('[data-acao]');
+
+                if (!botao) return;
+
+                const categoriaId = botao.dataset.id;
+                const acao = botao.dataset.acao;
+
+                if (acao === 'editar-categoria') {
+                    await abrirEdicaoCategoria(categoriaId);
+                    return;
+                }
+
+                if (acao === 'inativar-categoria') {
+                    const confirmar = confirm(
+                        'Tem certeza que deseja inativar esta categoria?'
+                    );
+
+                    if (!confirmar) return;
+
+                    try {
+                        await SIGEPAPI.requisicao(
+                            `/categorias/${categoriaId}`,
+                            { method: 'DELETE' }
+                        );
+
+                        await carregarCategorias();
+
+                        mostrarMensagem(
+                            'Categoria inativada com sucesso!',
+                            'success'
+                        );
+                    } catch (erro) {
+                        console.error('Erro ao inativar categoria:', erro);
+
+                        mostrarMensagem(
+                            erro.dados?.message ||
+                            'Não foi possível inativar a categoria.',
+                            'danger'
+                        );
+                    }
+                }
+            }
+
+            // Eventos para desktop e mobile
+            elementos.lista.addEventListener(
+                'click',
+                tratarAcaoCategoria
+            );
+
+            elementos.listaMobile.addEventListener(
+                'click',
+                tratarAcaoCategoria
+            );
+
+            // Formulário
+            document.getElementById('formCategoria')
+                .addEventListener(
+                    'submit',
+                    prepararCadastroCategoria
+                );
+
+            // Botão de nova categoria
+            document.getElementById('btnNovaCategoria')
+                .addEventListener(
+                    'click',
+                    abrirModalNovaCategoria
+                );
+        }
 
         // Abrir modal de nova categoria
         const btnNovaCategoria = document.getElementById('btnNovaCategoria');
@@ -63,6 +134,63 @@
             .addEventListener('submit', prepararCadastroCategoria);
 
         btnNovaCategoria.addEventListener('click', abrirModalNovaCategoria);
+
+        elementos.lista.addEventListener('click', evento => {
+            // Ações das categorias (desktop e mobile)
+            async function tratarAcaoCategoria(evento) {
+                const botao = evento.target.closest('[data-acao]');
+
+                if (!botao) return;
+
+                const categoriaId = botao.dataset.id;
+                const acao = botao.dataset.acao;
+
+                if (acao === 'editar-categoria') {
+                    abrirEdicaoCategoria(categoriaId);
+                    return;
+                }
+
+                if (acao === 'inativar-categoria') {
+                    const confirmar = confirm(
+                        'Tem certeza que deseja inativar esta categoria?'
+                    );
+
+                    if (!confirmar) return;
+
+                    try {
+                        await SIGEPAPI.requisicao(`/categorias/${categoriaId}`, {
+                            method: 'DELETE'
+                        });
+
+                        await carregarCategorias();
+
+                        mostrarMensagem(
+                            'Categoria inativada com sucesso!',
+                            'success'
+                        );
+
+                    } catch (erro) {
+                        console.error('Erro ao inativar categoria:', erro);
+
+                        mostrarMensagem(
+                            erro.dados?.message ||
+                            'Não foi possível inativar a categoria.',
+                            'danger'
+                        );
+                    }
+                }
+            }
+
+            elementos.lista.addEventListener('click', tratarAcaoCategoria);
+            elementos.listaMobile.addEventListener('click', tratarAcaoCategoria);
+            });
+
+            if (!botao) return;
+
+            const categoriaId = botao.dataset.id;
+
+            abrirEdicaoCategoria(categoriaId);
+        });
     }
 
     function abrirModalNovaCategoria() {
@@ -92,7 +220,51 @@
         modal.show();
     }
 
-    
+    async function abrirEdicaoCategoria(id) {
+        const mensagem = document.getElementById('mensagemFormularioCategoria');
+        const titulo = document.getElementById('tituloModalCategoria');
+        const grupoStatus = document.getElementById('grupoStatusCategoria');
+
+        mensagem.innerHTML = '';
+
+        try {
+            const resposta = await SIGEPAPI.requisicao(`/categorias/${id}`);
+
+            // A resposta pode vir diretamente ou dentro de "data"
+            const categoria = resposta.data || resposta;
+
+            // Preenche os campos do formulário
+            document.getElementById('categoriaId').value = categoria.id;
+            document.getElementById('nomeCategoria').value = categoria.nome || '';
+            document.getElementById('descricaoCategoria').value = categoria.descricao || '';
+            document.getElementById('tipoCategoria').value = categoria.tipo || '';
+            document.getElementById('statusCategoria').value = categoria.status || 'ativo';
+
+            // Configura o modal para edição
+            titulo.textContent = 'Editar Categoria';
+            grupoStatus.classList.remove('d-none');
+
+            // Abre o modal
+            const modal = bootstrap.Modal.getOrCreateInstance(
+                document.getElementById('modalCategoria')
+            );
+
+            modal.show();
+
+        } catch (erro) {
+            console.error('Erro ao buscar categoria:', erro);
+
+            const mensagemErro = erro.dados?.message ||
+                erro.message ||
+                'Não foi possível carregar os dados da categoria.';
+
+            mensagem.innerHTML = `
+                <div class="alert alert-danger small" role="alert">
+                    ${escaparHTML(mensagemErro)}
+                </div>`;
+        }
+    }
+
     async function prepararCadastroCategoria(evento) {
         evento.preventDefault();
 
@@ -110,7 +282,8 @@
         const dadosCategoria = {
             nome: document.getElementById('nomeCategoria').value.trim(),
             descricao: document.getElementById('descricaoCategoria').value.trim() || null,
-            tipo: document.getElementById('tipoCategoria').value
+            tipo: document.getElementById('tipoCategoria').value,
+            status: document.getElementById('statusCategoria').value
         };
 
         if (!dadosCategoria.nome || !dadosCategoria.tipo) {
@@ -129,10 +302,16 @@
                 <span class="spinner-border spinner-border-sm me-2"></span>
                 Salvando...`;
 
-            await SIGEPAPI.requisicao('/categorias', {
-                method: 'POST',
-                body: dadosCategoria
-            });
+            const categoriaId = document.getElementById('categoriaId').value;
+            const estavaEditando = Boolean(categoriaId);
+
+            await SIGEPAPI.requisicao(
+                categoriaId ? `/categorias/${categoriaId}` : '/categorias',
+                {
+                    method: categoriaId ? 'PUT' : 'POST',
+                    body: dadosCategoria
+                }
+            );
 
             const modal = bootstrap.Modal.getInstance(
                 document.getElementById('modalCategoria')
@@ -148,7 +327,12 @@
 
             await carregarCategorias();
 
-            mostrarMensagem('Categoria cadastrada com sucesso!', 'success');
+            mostrarMensagem(
+                estavaEditando
+                    ? 'Categoria atualizada com sucesso!'
+                    : 'Categoria cadastrada com sucesso!',
+                'success'
+            );
 
         } catch (erro) {
             console.error('Erro ao cadastrar categoria:', erro);
@@ -268,7 +452,29 @@
                     </td>
                     <td class="px-3 text-center">${situacao}</td>
                     <td class="px-4 text-end">
-                        <span class="text-muted">—</span>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-outline-primary"
+                                data-acao="editar-categoria"
+                                data-id="${categoria.id}"
+                                title="Editar categoria"
+                                aria-label="Editar categoria ${escaparHTML(categoria.nome)}">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            ${categoria.status === 'ativo' ? `
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    data-acao="inativar-categoria"
+                                    data-id="${categoria.id}"
+                                    title="Inativar categoria"
+                                    aria-label="Inativar categoria ${escaparHTML(categoria.nome)}">
+                                    <i class="bi bi-ban"></i>
+                                </button>
+                            ` : ''}
+                        </div>
                     </td>
                 </tr>`;
         }).join('');
@@ -326,6 +532,29 @@
                                 <strong>${Number(categoria.bens_patrimoniais_count || 0)}</strong>
                             </div>
                         </div>
+                                                <div class="d-flex justify-content-end gap-2 border-top pt-3 mt-3">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-sm btn-outline-primary"
+                                                        data-acao="editar-categoria"
+                                                        data-id="${categoria.id}"
+                                                        title="Editar categoria">
+                                                        <i class="bi bi-pencil me-1"></i>
+                                                        Editar
+                                                    </button>
+
+                                                    ${categoria.status === 'ativo' ? `
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-sm btn-outline-danger"
+                                                            data-acao="inativar-categoria"
+                                                            data-id="${categoria.id}"
+                                                            title="Inativar categoria">
+                                                        <i class="bi bi-ban me-1"></i>
+                                                        Inativar
+                                                        </button>
+                                                    ` : ''}
+                                                </div>
                     </div>
                 </div>`;
         }).join('');

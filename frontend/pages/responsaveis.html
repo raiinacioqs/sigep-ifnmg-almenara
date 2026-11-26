@@ -110,6 +110,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                                    <a class="nav-link text-white text-opacity-75 py-2 px-3"
+                                        href="materiais.html">
+                                        <i class="bi bi-box-seam me-2"></i> Materiais
+                                    </a>
+                                </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white text-opacity-75 py-2 px-3" href="setores.html">
                                 <i class="bi bi-building me-2"></i> Setores
                             </a>
@@ -162,7 +168,7 @@
                             guarda e zelo dos bens do Campus Almenara.</p>
                     </div>
                     <button
-                        class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto">
+                        id="btnNovoResponsavel" class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto">
                         <i class="bi bi-plus-lg"></i> Novo Responsável
                     </button>
                 </div>
@@ -233,6 +239,81 @@
                     </nav>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- Modal de cadastro e edição de responsáveis -->
+    <div class="modal fade" id="modalResponsavel" tabindex="-1"
+        aria-labelledby="tituloModalResponsavel" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow rounded-4">
+
+                <div class="modal-header">
+                    <h5 class="modal-title fw-semibold" id="tituloModalResponsavel">
+                        Novo Responsável
+                    </h5>
+
+                    <button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+
+                <form id="formResponsavel">
+                    <div class="modal-body">
+                        <div id="mensagemFormularioResponsavel"
+                            class="alert d-none" role="alert"></div>
+
+                        <!-- Campos do formulário serão adicionados aqui -->
+                         <div class="mb-3">
+                            <label for="siapeResponsavel" class="form-label fw-semibold">
+                                SIAPE *
+                            </label>
+                            <input type="text" id="siapeResponsavel" name="siape"
+                                class="form-control" maxlength="20" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nomeResponsavel" class="form-label fw-semibold">
+                                Nome completo *
+                            </label>
+                            <input type="text" id="nomeResponsavel" name="nome"
+                                class="form-control" maxlength="150" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailResponsavel" class="form-label fw-semibold">
+                                E-mail *
+                            </label>
+                            <input type="email" id="emailResponsavel" name="email"
+                                class="form-control" maxlength="150" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cargoResponsavel" class="form-label fw-semibold">
+                                Cargo *
+                            </label>
+                            <input type="text" id="cargoResponsavel" name="cargo"
+                                class="form-control" maxlength="150" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="setorResponsavel" class="form-label fw-semibold">
+                                Setor *
+                            </label>
+                            <select id="setorResponsavel" name="setor_id"
+                                class="form-select" required>
+                                <option value="">Selecione o setor</option>
+                            </select>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success"
+                            id="btnSalvarResponsavel">
+                            Salvar Responsável
+                        </button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 
