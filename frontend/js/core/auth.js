@@ -29,7 +29,8 @@
             'categorias.html',
             'setores.html',
             'responsaveis.html',
-            'materiais.html'
+            'materiais.html',
+            'bens-patrimoniais.html'
         ],
 
         servidor: [

@@ -95,6 +95,12 @@
                                 href="categorias.html"><i class="bi bi-folder me-2"></i> Categorias</a></li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white text-opacity-75 py-2 px-3"
+                                        href="bens-patrimoniais.html">
+                                        <i class="bi bi-pc-display me-2"></i> Bens Patrimoniais
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white text-opacity-75 py-2 px-3"
                                         href="materiais.html">
                                         <i class="bi bi-box-seam me-2"></i> Materiais
                                     </a>
@@ -147,7 +153,7 @@
                     <div class="col-6 col-lg-3">
                         <div class="card border-0 shadow-sm p-3 rounded-4">
                             <small class="text-muted" style="font-size: 0.75rem;">Total de Itens</small>
-                            <h3 class="fw-bold text-dark mb-0 mt-1 fs-3">1.482</h3>
+                            <h3 id="totalItens" class="fw-bold text-dark mb-0 mt-1 fs-3">--</h3>
                             <span class="text-success small" style="font-size: 0.65rem;"><i class="bi bi-arrow-up"></i>
                                 +12 este mês</span>
                         </div>
@@ -155,21 +161,21 @@
                     <div class="col-6 col-lg-3">
                         <div class="card border-0 shadow-sm p-3 rounded-4">
                             <small class="text-muted" style="font-size: 0.75rem;">Estoque Baixo</small>
-                            <h3 class="fw-bold text-warning mb-0 mt-1 fs-3">7</h3>
+                            <h3 id="estoqueBaixo" class="fw-bold text-warning mb-0 mt-1 fs-3">--</h3>
                             <span class="text-muted small" style="font-size: 0.65rem;">Atenção necessária</span>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3">
                         <div class="card border-0 shadow-sm p-3 rounded-4">
                             <small class="text-muted" style="font-size: 0.75rem;">Solicitações Pendentes</small>
-                            <h3 class="fw-bold text-primary mb-0 mt-1 fs-3">5</h3>
+                            <h3 id="solicitacoesPendentes" class="fw-bold text-primary mb-0 mt-1 fs-3">--</h3>
                             <span class="text-muted small" style="font-size: 0.65rem;">Aguardando aprovação</span>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3">
                         <div class="card border-0 shadow-sm p-3 rounded-4">
                             <small class="text-muted" style="font-size: 0.75rem;">Setores Ativos</small>
-                            <h3 class="fw-bold text-success mb-0 mt-1 fs-3">18</h3>
+                            <h3 id="setoresAtivos" class="fw-bold text-success mb-0 mt-1 fs-3">--</h3>
                             <span class="text-muted small" style="font-size: 0.65rem;">Campus Almenara</span>
                         </div>
                     </div>
@@ -222,55 +228,21 @@
                                     <th class="fw-semibold pb-3">Destino</th>
                                 </tr>
                             </thead>
-                            <tbody class="small">
+                            <tbody id="tabelaMovimentacoes" class="small">
                                 <tr>
-                                    <td class="text-muted">25/10/2023 14:32</td>
-                                    <td><span class="badge bg-success text-white px-2 py-1 fw-semibold">Entrada</span>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        Carregando movimentações...
                                     </td>
-                                    <td class="fw-bold text-dark">2023.0012</td>
-                                    <td class="fw-bold text-dark">Toner HP LaserJet 12A</td>
-                                    <td class="text-center fw-bold">10</td>
-                                    <td class="text-secondary">Fornecedor</td>
-                                    <td class="text-secondary">Almoxarifado B</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted">25/10/2023 11:15</td>
-                                    <td><span class="badge bg-danger text-white px-2 py-1 fw-semibold">Saída</span></td>
-                                    <td class="fw-bold text-dark">2023.0015</td>
-                                    <td class="fw-bold text-dark">Caneta Esferográfica Bic Azul</td>
-                                    <td class="text-center fw-bold">20</td>
-                                    <td class="text-secondary">Almoxarifado B</td>
-                                    <td class="text-secondary">Coord. TI</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Cards Mobile -->
-                    <div class="d-flex flex-column gap-3 d-md-none">
-                        <div class="p-3 bg-light rounded-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span class="badge bg-success text-white" style="font-size: 0.65rem;">Entrada</span>
-                                <small class="text-muted">25/10/2023 14:32</small>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-1 small">Toner HP LaserJet 12A</h6>
-                            <div class="d-flex justify-content-between text-muted small pt-2 border-top"
-                                style="font-size: 0.75rem;">
-                                <span>Fornecedor Almoxarifado B</span>
-                                <span class="fw-bold text-success">+10</span>
-                            </div>
-                        </div>
-                        <div class="p-3 bg-light rounded-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span class="badge bg-danger text-white" style="font-size: 0.65rem;">Saí­da</span>
-                                <small class="text-muted">25/10/2023 11:15</small>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-1 small">Caneta Esferográfica Bic Azul</h6>
-                            <div class="d-flex justify-content-between text-muted small pt-2 border-top"
-                                style="font-size: 0.75rem;">
-                                <span>Almoxarifado B Coord. TI</span>
-                                <span class="fw-bold text-danger">-20</span>
-                            </div>
+                    <div id="listaMovimentacoesMobile"
+                        class="d-flex flex-column gap-3 d-md-none">
+                        <div class="text-center text-muted py-4">
+                            Carregando movimentações...
                         </div>
                     </div>
                 </div>
@@ -313,6 +285,11 @@
             style="font-size: 0.65rem;">
             <i class="bi bi-folder d-block fs-5"></i> Categorias
         </a>
+        <a href="bens-patrimoniais.html"
+            class="text-center text-decoration-none py-1 px-2 text-white opacity-75"
+            style="font-size: 0.65rem;">
+            <i class="bi bi-pc-display d-block fs-5"></i> Bens
+        </a>
         <a href="materiais.html" class="text-center text-decoration-none py-1 px-2 text-white opacity-75"
             style="font-size: 0.65rem;">
             <i class="bi bi-box-seam d-block fs-5"></i> Materiais
@@ -327,7 +304,7 @@
         </a>
     </nav>
 
-    <script src="../js/dashboard.js"></script>
+    <script src="../js/modules/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/core/api.js"></script>
     <script src="../js/core/auth.js"></script>

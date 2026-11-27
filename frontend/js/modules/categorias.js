@@ -19,178 +19,108 @@
         elementos.mensagem = document.getElementById('mensagemCategorias');
 
         if (!window.SIGEPAPI) {
-            mostrarMensagem('Não foi possível inicializar a comunicação com a API.', 'danger');
+            mostrarMensagem(
+                'Não foi possível inicializar a comunicação com a API.',
+                'danger'
+            );
             return;
         }
 
         configurarEventos();
+
         await carregarCategorias();
     }
 
-    
-        function configurarEventos() {
-            // Pesquisa de categorias
-            elementos.busca.addEventListener('input', () => {
-                clearTimeout(temporizadorBusca);
+    function configurarEventos() {
+        // Pesquisa de categorias
+        elementos.busca.addEventListener('input', () => {
+            clearTimeout(temporizadorBusca);
 
-                temporizadorBusca = setTimeout(() => {
-                    paginaAtual = 1;
-                    carregarCategorias();
-                }, 400);
-            });
-
-            // Filtro por situação
-            elementos.filtroStatus.addEventListener('change', () => {
+            temporizadorBusca = setTimeout(() => {
                 paginaAtual = 1;
                 carregarCategorias();
-            });
+            }, 400);
+        });
 
-            // Paginação desktop
-            elementos.paginacao.addEventListener('click', evento => {
-                const botao = evento.target.closest('[data-pagina]');
+        // Filtro por situação
+        elementos.filtroStatus.addEventListener('change', () => {
+            paginaAtual = 1;
+            carregarCategorias();
+        });
 
-                if (!botao || botao.disabled) return;
+        // Paginação desktop
+        elementos.paginacao.addEventListener('click', evento => {
+            const botao = evento.target.closest('[data-pagina]');
 
-                paginaAtual = Number(botao.dataset.pagina);
-                carregarCategorias();
-            });
+            if (!botao || botao.disabled) return;
 
-            // Ações de editar e inativar
-            async function tratarAcaoCategoria(evento) {
-                const botao = evento.target.closest('[data-acao]');
+            paginaAtual = Number(botao.dataset.pagina);
+            carregarCategorias();
+        });
 
-                if (!botao) return;
-
-                const categoriaId = botao.dataset.id;
-                const acao = botao.dataset.acao;
-
-                if (acao === 'editar-categoria') {
-                    await abrirEdicaoCategoria(categoriaId);
-                    return;
-                }
-
-                if (acao === 'inativar-categoria') {
-                    const confirmar = confirm(
-                        'Tem certeza que deseja inativar esta categoria?'
-                    );
-
-                    if (!confirmar) return;
-
-                    try {
-                        await SIGEPAPI.requisicao(
-                            `/categorias/${categoriaId}`,
-                            { method: 'DELETE' }
-                        );
-
-                        await carregarCategorias();
-
-                        mostrarMensagem(
-                            'Categoria inativada com sucesso!',
-                            'success'
-                        );
-                    } catch (erro) {
-                        console.error('Erro ao inativar categoria:', erro);
-
-                        mostrarMensagem(
-                            erro.dados?.message ||
-                            'Não foi possível inativar a categoria.',
-                            'danger'
-                        );
-                    }
-                }
-            }
-
-            // Eventos para desktop e mobile
-            elementos.lista.addEventListener(
-                'click',
-                tratarAcaoCategoria
-            );
-
-            elementos.listaMobile.addEventListener(
-                'click',
-                tratarAcaoCategoria
-            );
-
-            // Formulário
-            document.getElementById('formCategoria')
-                .addEventListener(
-                    'submit',
-                    prepararCadastroCategoria
-                );
-
-            // Botão de nova categoria
-            document.getElementById('btnNovaCategoria')
-                .addEventListener(
-                    'click',
-                    abrirModalNovaCategoria
-                );
-        }
-
-        // Abrir modal de nova categoria
-        const btnNovaCategoria = document.getElementById('btnNovaCategoria');
-
-        // Validar formulário de categoria
-        document.getElementById('formCategoria')
-            .addEventListener('submit', prepararCadastroCategoria);
-
-        btnNovaCategoria.addEventListener('click', abrirModalNovaCategoria);
-
-        elementos.lista.addEventListener('click', evento => {
-            // Ações das categorias (desktop e mobile)
-            async function tratarAcaoCategoria(evento) {
-                const botao = evento.target.closest('[data-acao]');
-
-                if (!botao) return;
-
-                const categoriaId = botao.dataset.id;
-                const acao = botao.dataset.acao;
-
-                if (acao === 'editar-categoria') {
-                    abrirEdicaoCategoria(categoriaId);
-                    return;
-                }
-
-                if (acao === 'inativar-categoria') {
-                    const confirmar = confirm(
-                        'Tem certeza que deseja inativar esta categoria?'
-                    );
-
-                    if (!confirmar) return;
-
-                    try {
-                        await SIGEPAPI.requisicao(`/categorias/${categoriaId}`, {
-                            method: 'DELETE'
-                        });
-
-                        await carregarCategorias();
-
-                        mostrarMensagem(
-                            'Categoria inativada com sucesso!',
-                            'success'
-                        );
-
-                    } catch (erro) {
-                        console.error('Erro ao inativar categoria:', erro);
-
-                        mostrarMensagem(
-                            erro.dados?.message ||
-                            'Não foi possível inativar a categoria.',
-                            'danger'
-                        );
-                    }
-                }
-            }
-
-            elementos.lista.addEventListener('click', tratarAcaoCategoria);
-            elementos.listaMobile.addEventListener('click', tratarAcaoCategoria);
-            });
+        // Ações de editar e inativar
+        async function tratarAcaoCategoria(evento) {
+            const botao = evento.target.closest('[data-acao]');
 
             if (!botao) return;
 
             const categoriaId = botao.dataset.id;
+            const acao = botao.dataset.acao;
 
-            abrirEdicaoCategoria(categoriaId);
-        });
+            if (acao === 'editar-categoria') {
+                await abrirEdicaoCategoria(categoriaId);
+                return;
+            }
+
+            if (acao === 'inativar-categoria') {
+                const confirmar = confirm(
+                    'Tem certeza que deseja inativar esta categoria?'
+                );
+
+                if (!confirmar) return;
+
+                try {
+                    await SIGEPAPI.requisicao(
+                        `/categorias/${categoriaId}`,
+                        { method: 'DELETE' }
+                    );
+
+                    await carregarCategorias();
+
+                    mostrarMensagem(
+                        'Categoria inativada com sucesso!',
+                        'success'
+                    );
+                } catch (erro) {
+                    console.error('Erro ao inativar categoria:', erro);
+
+                    mostrarMensagem(
+                        erro.dados?.message ||
+                        'Não foi possível inativar a categoria.',
+                        'danger'
+                    );
+                }
+            }
+        }
+
+        // Eventos para desktop e mobile
+        elementos.lista.addEventListener(
+            'click',
+            tratarAcaoCategoria
+        );
+
+        elementos.listaMobile.addEventListener(
+            'click',
+            tratarAcaoCategoria
+        );
+
+        // Formulário de cadastro e edição
+        document.getElementById('formCategoria')
+            .addEventListener('submit', prepararCadastroCategoria);
+
+        // Botão de nova categoria
+        document.getElementById('btnNovaCategoria')
+            .addEventListener('click', abrirModalNovaCategoria);
     }
 
     function abrirModalNovaCategoria() {
@@ -670,5 +600,5 @@
             "'": '&#039;'
         })[caractere]);
     }
-
+    
 })();

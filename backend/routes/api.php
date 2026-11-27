@@ -11,6 +11,9 @@ use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\EntradaEstoqueController;
 use App\Http\Controllers\Api\SolicitacaoRetiradaController;
 use App\Http\Controllers\Api\Admin\UsuarioController;
+use App\Http\Controllers\Api\MovimentacaoPatrimonialController;
+use App\Http\Controllers\Api\ManutencaoController;
+use App\Http\Controllers\Api\BemPatrimonialController;
 
 // Rota pública
 Route::post('/login', [AuthController::class, 'login']);
@@ -64,11 +67,50 @@ Route::middleware(['auth:sanctum', 'usuario.ativo'])->group(function () {
                 [SolicitacaoRetiradaController::class, 'index']
             );
 
+            // Consulta das movimentações patrimoniais
+            Route::get(
+                '/movimentacoes-patrimoniais',
+                [MovimentacaoPatrimonialController::class, 'index']
+            );
+            
+            // Consulta de movimentações de estoque
+            Route::get(
+                '/movimentacoes-estoque',
+                [MovimentacaoPatrimonialController::class, 'estoque']
+            );
             // Consulta de uma solicitação específica
             Route::get(
                 '/solicitacoes-retirada/{id}',
                 [SolicitacaoRetiradaController::class, 'show']
             );
+
+            // Dados da manutenção pelo gestor de almoxarifado
+            Route::get('/manutencoes', [ManutencaoController::class, 'index']);
+            Route::post('/manutencoes', [ManutencaoController::class, 'store']);
+
+            // Consulta de bens patrimoniais
+            Route::get(
+                '/bens-patrimoniais',
+                [BemPatrimonialController::class, 'index']
+            );
+
+            // Cadastro de bem patrimonial
+            Route::post(
+                '/bens-patrimoniais',
+                [BemPatrimonialController::class, 'store']
+            );
+
+            // Consulta individual de bem patrimonial
+            Route::get('/bens-patrimoniais/{id}', [
+                BemPatrimonialController::class,
+                'show'
+            ]);
+
+            // Edição do bem patrimonial
+            Route::put('/bens-patrimoniais/{id}', [
+                BemPatrimonialController::class,
+                'update'
+            ]);
 
             // Atendimento restrito ao Gestor de Almoxarifado
             Route::middleware('perfil:Gestor de Almoxarifado')->group(function () {

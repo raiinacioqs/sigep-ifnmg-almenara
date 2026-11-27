@@ -122,7 +122,7 @@
 
             <!-- Conteúdo Principal -->
             <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 offset-md-3 offset-lg-2">
-                <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded-3 shadow-sm mb-4">
+                <div class="d-none d-md-flex justify-content-between align-items-center bg-white p-3 rounded-3 shadow-sm mb-4">
                     <div class="d-flex align-items-center gap-2">
                         <span class="fw-bold text-dark fs-6">Sistema de Gestão Patrimonial</span>
                         <span class="badge bg-light text-secondary border fw-normal d-none d-sm-inline"
@@ -139,56 +139,38 @@
                             dos bens patrimoniais do campus.</p>
                     </div>
                     <button
-                        class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto">
-                        <i class="bi bi-plus-lg"></i> Nova Manutenção
+                        type="button"
+                        class="btn btn-success btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 align-self-start align-self-md-auto"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalNovaManutencao"
+                    >
+                        <i class="bi bi-plus-lg"></i>
+                        Nova Manutenção
                     </button>
                 </div>
 
                 <!-- Seção Manutenções em Andamento -->
                 <h6 class="fw-bold text-dark mb-3">Manutenções em Andamento</h6>
-                <div class="row g-3 mb-4">
-                    <div class="col-12 col-xl-6">
-                        <div class="card border-0 shadow-sm p-3 rounded-4 h-100 border-start border-4 border-warning">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <span class="badge bg-secondary bg-opacity-10 text-secondary me-1"
-                                        style="font-size: 0.65rem;">Corretiva</span>
-                                    <small class="text-muted" style="font-size: 0.75rem;">Tombo: 2021.0089</small>
-                                </div>
-                                <span class="badge bg-warning text-dark fw-semibold px-2 py-1"
-                                    style="font-size: 0.7rem;">Em andamento</span>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-1">Projetor Epson PowerLite</h6>
-                            <small class="text-muted" style="font-size: 0.75rem;">Abertura: 18/10/2023 &nbsp;•&nbsp;
-                                Prestador: TechVision Ltda</small>
-                            <div class="mt-2 pt-2 border-top d-flex justify-content-between text-muted"
-                                style="font-size: 0.7rem;">
-                                <span>Prazo estimado:</span>
-                                <strong class="text-dark">28/10/2023</strong>
-                            </div>
-                        </div>
+                <!-- Manutenções em Andamento - Desktop -->
+                <div
+                    id="manutencoesEmAndamentoDesktop"
+                    class="row g-3 mb-4 d-none d-md-flex"
+                >
+                    <div class="col-12">
+                        <p class="text-muted text-center py-3">
+                            Nenhuma manutenção em andamento.
+                        </p>
                     </div>
-                    <div class="col-12 col-xl-6">
-                        <div class="card border-0 shadow-sm p-3 rounded-4 h-100 border-start border-4 border-info">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <span class="badge bg-primary bg-opacity-10 text-primary me-1"
-                                        style="font-size: 0.65rem;">Preventiva</span>
-                                    <small class="text-muted" style="font-size: 0.75rem;">Tombo: 2020.0342</small>
-                                </div>
-                                <span class="badge bg-info text-white fw-semibold px-2 py-1"
-                                    style="font-size: 0.7rem;">Aguardando Peça</span>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-1">Ar Condicionado Split Electrolux</h6>
-                            <small class="text-muted" style="font-size: 0.75rem;">Abertura: 22/10/2023 &nbsp;•&nbsp;
-                                Prestador: ClimaFrio S.A.</small>
-                            <div class="mt-2 pt-2 border-top d-flex justify-content-between text-muted"
-                                style="font-size: 0.7rem;">
-                                <span>Prazo estimado:</span>
-                                <strong class="text-dark">05/11/2023</strong>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+
+                <!-- Manutenções em Andamento - Mobile -->
+                <div
+                    id="manutencoesEmAndamentoMobile"
+                    class="d-flex flex-column gap-3 mb-4 d-md-none"
+                >
+                    <p class="text-muted text-center py-3">
+                        Nenhuma manutenção em andamento.
+                    </p>
                 </div>
 
                 <!-- Histórico de Manutenções -->
@@ -208,138 +190,32 @@
                                     <th class="py-3 px-3 fw-semibold">Status</th>
                                 </tr>
                             </thead>
-                            <tbody class="small">
+                            <tbody id="tabelaManutencoes">
                                 <tr>
-                                    <td class="py-3 px-4 text-muted fw-semibold">MAN-042</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">2021.0089 - Projetor Epson</td>
-                                    <td class="py-3 px-3 text-muted">Corretiva</td>
-                                    <td class="py-3 px-3 text-muted">18/10/2023</td>
-                                    <td class="py-3 px-3 text-muted">--</td>
-                                    <td class="py-3 px-3 text-secondary">TechVision Ltda</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">R$ 450,00</td>
-                                    <td class="py-3 px-3"><span
-                                            class="badge bg-warning text-dark px-2 py-1 fw-semibold">Em andamento</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-muted fw-semibold">MAN-041</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">2019.0012 - Microcomputador Dell</td>
-                                    <td class="py-3 px-3 text-muted">Corretiva</td>
-                                    <td class="py-3 px-3 text-muted">10/10/2023</td>
-                                    <td class="py-3 px-3 text-muted">15/10/2023</td>
-                                    <td class="py-3 px-3 text-secondary">InfoSoluções</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">R$ 180,00</td>
-                                    <td class="py-3 px-3"><span
-                                            class="badge bg-success text-white px-2 py-1 fw-semibold">Concluída</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-muted fw-semibold">MAN-040</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">2022.0125 - Bebedouro IBBL</td>
-                                    <td class="py-3 px-3 text-muted">Preventiva</td>
-                                    <td class="py-3 px-3 text-muted">05/10/2023</td>
-                                    <td class="py-3 px-3 text-muted">06/10/2023</td>
-                                    <td class="py-3 px-3 text-secondary">AcquaVida</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">R$ 90,00</td>
-                                    <td class="py-3 px-3"><span
-                                            class="badge bg-success text-white px-2 py-1 fw-semibold">Concluída</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-muted fw-semibold">MAN-039</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">2020.0054 - Impressora HP LaserJet</td>
-                                    <td class="py-3 px-3 text-muted">Corretiva</td>
-                                    <td class="py-3 px-3 text-muted">01/10/2023</td>
-                                    <td class="py-3 px-3 text-muted">03/10/2023</td>
-                                    <td class="py-3 px-3 text-secondary">Office Copiadoras</td>
-                                    <td class="py-3 px-3 fw-bold text-dark">R$ 350,00</td>
-                                    <td class="py-3 px-3"><span
-                                            class="badge bg-danger text-white px-2 py-1 fw-semibold">Cancelada</span>
+                                    <td colspan="8" class="text-center text-muted py-4">
+                                        Nenhuma manutenção cadastrada.
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div
-                        class="card-footer bg-white py-3 px-4 d-flex justify-content-between align-items-center border-top">
-                        <small class="text-muted">Exibindo 1-4 de 42 manutenções registradas</small>
-                        <nav>
-                            <ul class="pagination pagination-sm mb-0">
-                                <li class="page-item disabled"><a class="page-link border-0 text-muted"
-                                        href="#">Anterior</a></li>
-                                <li class="page-item active"><a
-                                        class="page-link bg-success border-success text-white rounded-1 mx-1"
-                                        href="#">1</a></li>
-                                <li class="page-item"><a class="page-link border-0 text-secondary" href="#">Próximo</a>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div class="card-footer bg-white py-3 px-4 d-flex justify-content-between align-items-center border-top flex-wrap gap-2">
+                        <small id="resumoPaginacaoManutencoes" class="text-muted">
+                            Carregando manutenções...
+                        </small>
+
+                        <nav id="paginacaoManutencoes"></nav>
                     </div>
                 </div>
 
                 <!-- Cards Mobile -->
-                <div class="d-flex flex-column gap-3 d-md-none">
-                    <!-- Card Andamento 1 -->
-                    <div class="card border-0 shadow-sm p-3 rounded-3">
-                        <div class="d-flex justify-content-between align-items-start mb-1">
-                            <small class="text-muted" style="font-size: 0.75rem;">Tombo: 2021.0089</small>
-                            <span class="badge bg-secondary text-white" style="font-size: 0.65rem;">Corretiva</span>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1" style="font-size: 0.85rem;">Projetor Epson</h6>
-                        <p class="text-muted small mb-2" style="font-size: 0.75rem;">Prazo: Estimado em 5 dias</p>
-                        <div class="pt-2 border-top text-end">
-                            <span class="badge bg-warning text-dark fw-semibold" style="font-size: 0.7rem;">Em
-                                andamento</span>
-                        </div>
-                    </div>
-                    <!-- Card Andamento 2 -->
-                    <div class="card border-0 shadow-sm p-3 rounded-3">
-                        <div class="d-flex justify-content-between align-items-start mb-1">
-                            <small class="text-muted" style="font-size: 0.75rem;">Tombo: 2020.0342</small>
-                            <span class="badge bg-primary text-white" style="font-size: 0.65rem;">Preventiva</span>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1" style="font-size: 0.85rem;">Ar Condicionado Split</h6>
-                        <p class="text-muted small mb-2" style="font-size: 0.75rem;">Prazo: Estimado em 5 dias</p>
-                        <div class="pt-2 border-top text-end">
-                            <span class="badge bg-info text-white fw-semibold" style="font-size: 0.7rem;">Aguardando
-                                Peça</span>
-                        </div>
-                    </div>
-
-                    <!-- Título Histórico Recente -->
-                    <h6 class="fw-bold text-dark mt-2 mb-0 fs-6">Histórico Recente</h6>
-
-                    <!-- Card Histórico 1 -->
-                    <div class="card border-0 shadow-sm p-3 rounded-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Microcomputador Dell</h6>
-                                <small class="text-muted" style="font-size: 0.7rem;">ID: MAN-041 • Corretiva</small>
-                            </div>
-                            <span class="badge bg-success text-white" style="font-size: 0.65rem;">Concluída</span>
-                        </div>
-                    </div>
-                    <!-- Card Histórico 2 -->
-                    <div class="card border-0 shadow-sm p-3 rounded-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Bebedouro IBBL</h6>
-                                <small class="text-muted" style="font-size: 0.7rem;">ID: MAN-040 • Preventiva</small>
-                            </div>
-                            <span class="badge bg-success text-white" style="font-size: 0.65rem;">Concluída</span>
-                        </div>
-                    </div>
-                    <!-- Card Histórico 3 -->
-                    <div class="card border-0 shadow-sm p-3 rounded-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Impressora HP LaserJet
-                                </h6>
-                                <small class="text-muted" style="font-size: 0.7rem;">ID: MAN-039 • Corretiva</small>
-                            </div>
-                            <span class="badge bg-danger text-white" style="font-size: 0.65rem;">Cancelada</span>
-                        </div>
-                    </div>
+                <div
+                    id="listaManutencoesMobile"
+                    class="d-flex flex-column gap-3 d-md-none"
+                >
+                    <p class="text-center text-muted py-4 mb-0">
+                        Nenhuma manutenção cadastrada.
+                    </p>
                 </div>
             </main>
         </div>
@@ -388,7 +264,217 @@
             <i class="bi bi-people d-block fs-5"></i> Responsáveis
         </a>
     </nav>
+
+    <!-- Modal Nova Manutenção -->
+    <div
+        class="modal fade"
+        id="modalNovaManutencao"
+        tabindex="-1"
+        aria-labelledby="tituloModalNovaManutencao"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 rounded-4 shadow">
+
+                <!-- Cabeçalho -->
+                <div class="modal-header bg-success text-white px-4 py-3">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="tituloModalNovaManutencao">
+                            <i class="bi bi-tools me-2"></i>
+                            Nova Manutenção
+                        </h5>
+                        <small class="text-white-50">
+                            Registre uma manutenção de bem patrimonial
+                        </small>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Fechar"
+                    ></button>
+                </div>
+
+                <!-- Formulário -->
+                <form id="formNovaManutencao" class="d-flex flex-column overflow-hidden">
+                    <div class="modal-body p-4">
+
+                        <div class="alert alert-light border small">
+                            <i class="bi bi-info-circle text-success me-2"></i>
+                            Os campos marcados com <span class="text-danger">*</span>
+                            são obrigatórios.
+                        </div>
+
+                        <div class="row g-3">
+
+                            <!-- Bem patrimonial -->
+                            <div class="col-12">
+                                <label for="bemPatrimonialManutencao" class="form-label fw-semibold">
+                                    Bem patrimonial <span class="text-danger">*</span>
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="bemPatrimonialManutencao"
+                                    name="bem_patrimonial_id"
+                                    required
+                                >
+                                    <option value="">Selecione um bem patrimonial</option>
+                                </select>
+
+                                <small class="form-text text-muted">
+                                    A lista será carregada com os bens cadastrados no sistema.
+                                </small>
+                            </div>
+
+                            <!-- Tipo -->
+                            <div class="col-md-6">
+                                <label for="tipoManutencao" class="form-label fw-semibold">
+                                    Tipo de manutenção <span class="text-danger">*</span>
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="tipoManutencao"
+                                    name="tipo"
+                                    required
+                                >
+                                    <option value="">Selecione</option>
+                                    <option value="preventiva">Preventiva</option>
+                                    <option value="corretiva">Corretiva</option>
+                                </select>
+                            </div>
+
+                            <!-- Data de abertura -->
+                            <div class="col-md-6">
+                                <label for="dataAberturaManutencao" class="form-label fw-semibold">
+                                    Data de abertura <span class="text-danger">*</span>
+                                </label>
+
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="dataAberturaManutencao"
+                                    name="data_abertura"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="col-12">
+                                <label for="descricaoManutencao" class="form-label fw-semibold">
+                                    Descrição do problema/serviço
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="descricaoManutencao"
+                                    name="descricao"
+                                    rows="3"
+                                    maxlength="5000"
+                                    placeholder="Descreva o problema identificado ou o serviço necessário..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Prestador -->
+                            <div class="col-md-6">
+                                <label for="prestadorManutencao" class="form-label fw-semibold">
+                                    Prestador de serviço
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="prestadorManutencao"
+                                    name="prestador"
+                                    maxlength="150"
+                                    placeholder="Nome do prestador ou empresa"
+                                >
+                            </div>
+
+                            <!-- Custo -->
+                            <div class="col-md-6">
+                                <label for="custoManutencao" class="form-label fw-semibold">
+                                    Custo (R$)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="custoManutencao"
+                                    name="custo"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="0,00"
+                                >
+                            </div>
+
+                            <!-- Data de conclusão -->
+                            <div class="col-md-6">
+                                <label for="dataConclusaoManutencao" class="form-label fw-semibold">
+                                    Data de conclusão
+                                </label>
+
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="dataConclusaoManutencao"
+                                    name="data_conclusao"
+                                >
+
+                                <small class="form-text text-muted">
+                                    Preencha somente se a manutenção já foi concluída.
+                                </small>
+                            </div>
+
+                            <!-- Observação -->
+                            <div class="col-12">
+                                <label for="observacaoManutencao" class="form-label fw-semibold">
+                                    Observações
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="observacaoManutencao"
+                                    name="observacao"
+                                    rows="2"
+                                    placeholder="Informações adicionais..."
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botões de ação no rodapé do modal -->
+                    <div class="modal-footer border-top bg-light">
+                        <button
+                            type="button"
+                            class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">
+                            <i class="bi bi-x-lg me-1"></i>
+                            Cancelar
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success"
+                            id="btnSalvarManutencao">
+                            <i class="bi bi-check-lg me-1"></i>
+                            Salvar manutenção
+                        </button>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/core/api.js"></script>
     <script src="../js/core/auth.js"></script>
+    <script src="../js/modules/manutencoes.js"></script>
 </body>
 </html>
