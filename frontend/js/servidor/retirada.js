@@ -60,9 +60,18 @@
                     const opcao = document.createElement('option');
 
                     opcao.value = material.id;
-                    opcao.textContent =
-                        `${material.nome} (Disponível: ${quantidade} ${material.unidade_medida})`;
+                    const unidade = material.unidade_medida;
 
+                    const unidadePlural = quantidade === 1
+                        ? unidade
+                        : unidade === 'unidade'
+                            ? 'unidades'
+                            : unidade === 'resma'
+                                ? 'resmas'
+                                : `${unidade}s`;
+
+                    opcao.textContent =
+                        `${material.nome} (Disponível: ${quantidade} ${unidadePlural})`;
                     campoMaterial.appendChild(opcao);
                 });
 

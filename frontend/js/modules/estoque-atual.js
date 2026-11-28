@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const ITENS_POR_PAGINA = 10;
+    const ITENS_POR_PAGINA = 4;
 
     let materiais = [];
     let materiaisFiltrados = [];

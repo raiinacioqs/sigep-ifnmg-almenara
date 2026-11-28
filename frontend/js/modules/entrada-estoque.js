@@ -587,48 +587,60 @@ function exibirErros(erro) {
     );
 }
 
-/**
- * Atualiza quantidade ou valor unitário de um item.
- */
-function editarItem(indice, campo, valor) {
-    const item = itensEntrada[indice];
+    /**
+     * Atualiza quantidade ou valor unitário de um item.
+     */
+    function editarItem(indice, campo, valor) {
+        const item = itensEntrada[indice];
 
-    if (!item) return;
+        if (!item) return;
 
-    if (campo === 'valor_unitario' && valor.trim() === '') {
-        item.valor_unitario = null;
-        atualizarListaItens();
-        return;
+        const valorTexto = String(valor ?? '').trim();
 
-    }
-
-    const numero = Number(valor);
-
-    if (!Number.isFinite(numero)) {
-        exibirMensagem('Informe um valor numérico válido.', 'warning');
-        atualizarListaItens();
-        return;
-    }
-
-    if (campo === 'quantidade') {
-        if (numero <= 0) {
-            exibirMensagem('A quantidade deve ser maior que zero.', 'warning');
+        // Permite deixar o valor unitário em branco.
+        if (campo === 'valor_unitario' && valorTexto === '') {
+            item.valor_unitario = null;
             atualizarListaItens();
             return;
         }
 
-        item.quantidade = numero;
-    }
+        const numero = Number(valorTexto);
 
-    if (campo === 'valor_unitario') {
-        if (numero < 0) {
-            exibirMensagem('O valor unitário não pode ser negativo.', 'warning');
+        if (!Number.isFinite(numero)) {
+            exibirMensagem(
+                'Informe um valor numérico válido.',
+                'warning'
+            );
+
             atualizarListaItens();
             return;
         }
 
-        item.valor_unitario = numero;
-    }
+        if (campo === 'quantidade') {
+            if (numero <= 0) {
+                exibirMensagem(
+                    'A quantidade deve ser maior que zero.',
+                    'warning'
+                );
 
-    atualizarListaItens();
+                atualizarListaItens();
+                return;
+            }
+
+            item.quantidade = numero;
+        } else if (campo === 'valor_unitario') {
+            if (numero < 0) {
+                exibirMensagem(
+                    'O valor unitário não pode ser negativo.',
+                    'warning'
+                );
+
+                atualizarListaItens();
+                return;
+            }
+
+            item.valor_unitario = numero;
+        }
+
+        atualizarListaItens();
 }

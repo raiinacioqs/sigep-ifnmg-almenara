@@ -239,3 +239,40 @@ html:not([data-auth-status="authenticated"])::after {
     border-color: #198754;
     opacity: 1;
 }
+
+/* Espaço para a barra inferior fixa no mobile */
+@media (max-width: 767.98px) {
+    body {
+        padding-bottom: 90px !important;
+    }
+}
+
+/* Paginação do estoque */
+#paginacaoEstoque {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    width: 100%;
+    margin: 20px auto 30px;
+    padding: 12px 16px;
+}
+
+/* Botões da paginação */
+#paginacaoEstoque .btn {
+    min-width: 40px;
+    min-height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Resumo do estoque */
+#resumoEstoque {
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
