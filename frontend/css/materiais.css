@@ -122,3 +122,12 @@
         flex: 1;
     }
 }
+
+/* Ajuste do modal de materiais no mobile */
+@media (max-width: 767.98px) {
+
+    #modalMaterial .modal-content {
+        height: auto !important;
+        min-height: 0 !important;
+    }
+}

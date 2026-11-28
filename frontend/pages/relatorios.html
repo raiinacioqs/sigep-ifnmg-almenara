@@ -141,16 +141,52 @@
                     <div class="card border-0 shadow-sm p-3 rounded-3">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">Relatório Quantitativo</h6>
-                            <button class="btn btn-sm btn-success px-3 py-1 fw-semibold" style="font-size: 0.75rem;">Gerar</button>
+                            <button id="btnRelatorioQuantitativo" class="btn btn-sm btn-success px-3 py-1 fw-semibold" style="font-size: 0.75rem;">Gerar</button>
                         </div>
                         <p class="text-muted small mb-0" style="font-size: 0.75rem;">Visão geral e contagem atual de todos os bens cadastrados.</p>
+                        <div id="resultadoRelatorioQuantitativo" class="mt-1"></div>
+                        <div id="resultadoCategorias" class="mt-1"></div>
+                        <div id="resultadoConservacao" class="mt-1"></div>
                     </div>
                     <div class="card border-0 shadow-sm p-3 rounded-3">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">Histórico de Baixas</h6>
-                            <button class="btn btn-sm btn-success px-3 py-1 fw-semibold" style="font-size: 0.75rem;">Gerar</button>
+                            <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">
+                                Relatório de Estoque de Materiais
+                            </h6>
+
+                            <button
+                                id="btnRelatorioEstoqueMateriais"
+                                class="btn btn-sm btn-success px-3 py-1 fw-semibold"
+                                style="font-size: 0.75rem;">
+                                Gerar
+                            </button>
                         </div>
-                        <p class="text-muted small mb-0" style="font-size: 0.75rem;">Relação completa de todos os itens retirados e justificativas.</p>
+
+                        <p class="text-muted small mb-0" style="font-size: 0.75rem;">
+                            Consulte o saldo atual dos materiais de consumo e suas unidades de medida.
+                        </p>
+
+                        <div id="resultadoRelatorioEstoqueMateriais" class="mt-1"></div>
+                    </div>
+                    <div class="card border-0 shadow-sm p-3 rounded-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">
+                                Histórico de Baixas
+                            </h6>
+
+                            <button
+                                id="btnRelatorioHistoricoBaixas"
+                                class="btn btn-sm btn-success px-3 py-1 fw-semibold"
+                                style="font-size: 0.75rem;">
+                                Gerar
+                            </button>
+                        </div>
+
+                        <p class="text-muted small mb-0" style="font-size: 0.75rem;">
+                            Relação de materiais retirados, com data, quantidade e responsável.
+                        </p>
+
+                        <div id="resultadoRelatorioHistoricoBaixas" class="mt-1"></div>
                     </div>
                     <div class="card border-0 shadow-sm p-3 rounded-3">
                         <div class="d-flex justify-content-between align-items-center mb-1">
@@ -160,11 +196,23 @@
                         <p class="text-muted small mb-0" style="font-size: 0.75rem;">Bens organizados de acordo com a origem e nota fiscal.</p>
                     </div>
                     <div class="card border-0 shadow-sm p-3 rounded-3">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">Movimentações por Período</h6>
-                            <button class="btn btn-sm btn-success px-3 py-1 fw-semibold" style="font-size: 0.75rem;">Gerar</button>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">
+                                Movimentações por Período
+                            </h6>
+
+                            <button id="btnRelatorioMovimentacoesPeriodo"
+                                class="btn btn-sm btn-success px-3 py-1 fw-semibold"
+                                style="font-size: 0.75rem;">
+                                Gerar
+                            </button>
                         </div>
-                        <p class="text-muted small mb-0" style="font-size: 0.75rem;">Gráficos e fluxos de entradas e saídas mensais.</p>
+
+                        <p class="text-muted small mb-0" style="font-size: 0.75rem;">
+                            Gráficos e fluxos de entradas e saídas mensais.
+                        </p>
+
+                        <div id="resultadoRelatorioMovimentacoes"></div>
                     </div>
                 </div>
 
@@ -231,5 +279,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/core/api.js"></script>
     <script src="../js/core/auth.js"></script>
+    <script src="../js/modules/relatorios.js"></script>
 </body>
 </html>

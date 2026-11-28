@@ -548,6 +548,7 @@
                     Carregando materiais...
                 </td>
             </tr>`;
+        document.getElementById('listaMateriaisMobile').innerHTML = '';
     }
 
     function mostrarMensagem(mensagem, tipo) {
